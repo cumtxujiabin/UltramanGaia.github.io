@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,writeup," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="渗透基础第一关:很简单的一个注入普通的GET注入的确简单，丢个单引号就报错了，union注入 1python .\sqlmap.py -u &amp;quot;http://192.168.193.128/pentest/test/sqli/sqltamp.php?gid=1&amp;amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2&amp;quot; --technique">
+<meta name="keywords" content="ctf,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webug3.0 writeup">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2017/webug3-0-writeup.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="渗透基础第一关:很简单的一个注入普通的GET注入的确简单，丢个单引号就报错了，union注入 1python .\sqlmap.py -u &amp;quot;http://192.168.193.128/pentest/test/sqli/sqltamp.php?gid=1&amp;amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2&amp;quot; --technique">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/1.jpg">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/2.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/3.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/4.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/5.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/6.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/7.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/8.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/9.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/10.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/11.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/12.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/13.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/14.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/15.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/16.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/17.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/18.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/19.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/webug3/20.png">
+<meta property="og:updated_time" content="2017-12-23T11:59:32.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webug3.0 writeup">
+<meta name="twitter:description" content="渗透基础第一关:很简单的一个注入普通的GET注入的确简单，丢个单引号就报错了，union注入 1python .\sqlmap.py -u &amp;quot;http://192.168.193.128/pentest/test/sqli/sqltamp.php?gid=1&amp;amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2&amp;quot; --technique">
+<meta name="twitter:image" content="http://ultramangaia.github.io/img/webug3/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2017/webug3-0-writeup.html"/>
+
+
+
+
+
+  <title>webug3.0 writeup | UltramanGaia's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2017/webug3-0-writeup.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webug3.0 writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-04T19:46:57+08:00">
+                2017-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/writeup/" itemprop="url" rel="index">
+                    <span itemprop="name">writeup</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="渗透基础"><a href="#渗透基础" class="headerlink" title="渗透基础"></a>渗透基础</h1><h2 id="第一关-很简单的一个注入"><a href="#第一关-很简单的一个注入" class="headerlink" title="第一关:很简单的一个注入"></a>第一关:很简单的一个注入</h2><p>普通的GET注入<br>的确简单，丢个单引号就报错了，union注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\sqlmap.py -u &quot;http://192.168.193.128/pentest/test/sqli/sqltamp.php?gid=1&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2&quot; --technique=U</span><br></pre></td></tr></table></figure>
+<h2 id="第二关-从图片中你能找到什么？"><a href="#第二关-从图片中你能找到什么？" class="headerlink" title="第二关:从图片中你能找到什么？"></a>第二关:从图片中你能找到什么？</h2><p>从图片中找到有用的信息</p>
+<p>binwalk、foremost可以发现rar，内有123.txt文件写着密码123<br>然后没思路，后台看到flag应该为<br><img src="/img/webug3/1.jpg" alt=""><br>flang{fa136c7c341a6e26}<br>加油</p>
+<h2 id="第三关-你看到了什么？"><a href="#第三关-你看到了什么？" class="headerlink" title="第三关:你看到了什么？"></a>第三关:你看到了什么？</h2><p>渗透网站的时候目录也很重要</p>
+<p>DirBuster扫下目录<br><img src="/img/webug3/2.png" alt=""></p>
+<p>发现有这个目录</p>
+<h2 id="第四关-告诉你了flang是5位数"><a href="#第四关-告诉你了flang是5位数" class="headerlink" title="第四关:告诉你了flang是5位数"></a>第四关:告诉你了flang是5位数</h2><p>当遇到五位验证码的时候可以爆破<br>没有看到验证码。。。考虑应该是考查爆破验证码，题目没出好吧</p>
+<h2 id="第五关-一个优点小小的特殊的注入"><a href="#第五关-一个优点小小的特殊的注入" class="headerlink" title="第五关:一个优点小小的特殊的注入"></a>第五关:一个优点小小的特殊的注入</h2><p>头部的一个注入<br>看到头部注入就想到X-Forwarded-For 和 User-Agent<br><img src="/img/webug3/3.png" alt=""></p>
+<h2 id="第六关-这关需要rmb购买哦"><a href="#第六关-这关需要rmb购买哦" class="headerlink" title="第六关:这关需要rmb购买哦"></a>第六关:这关需要rmb购买哦</h2><p>支付问题：用最少的钱去购买到一本书！<br>随便输入admin/admin进去发现登录失败跳转，但是看返回包，后面的内容居然还是出现了，<br>估计是后台只是设置了跳转，没有die，还会执行后面的内容<br>禁用跳转后<br><img src="/img/webug3/4.png" alt=""></p>
+<p>点击购买发现提示用户没登录<br><img src="/img/webug3/5.png" alt=""></p>
+<p>改下uid<br><img src="/img/webug3/6.png" alt=""></p>
+<p>成功用别人的钱买书了<br>可是题目说是”用最少的钱去购买到一本书”<br>改金额，金额改为0<br><img src="/img/webug3/7.png" alt=""></p>
+<h2 id="第七关-越权"><a href="#第七关-越权" class="headerlink" title="第七关:越权"></a>第七关:越权</h2><p>已有账号：tom 密码123456<br><img src="/img/webug3/8.png" alt=""></p>
+<p>并没有验证原密码，这直接修改即可越权</p>
+<h2 id="第八关-CSRF"><a href="#第八关-CSRF" class="headerlink" title="第八关:CSRF"></a>第八关:CSRF</h2><p>管理员每天晚上十点上线<br><img src="/img/webug3/9.png" alt=""></p>
+<p>burpsuite生成CSRF POC</p>
+<h2 id="第九关-URL跳转"><a href="#第九关-URL跳转" class="headerlink" title="第九关:URL跳转"></a>第九关:URL跳转</h2><p>能不能从我到百度那边去？<br>额，需要提交参数url即可，怎么想到的呢！</p>
+<h2 id="第十关-文件下载"><a href="#第十关-文件下载" class="headerlink" title="第十关:文件下载"></a>第十关:文件下载</h2><p>根据提示下载需要的文件<br>题目链接应该换成这个</p>
+<p>很明显的任意文件读取，直接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/webug3/10.png" alt=""></p>
+<p>各种读文件，有连接数据库的php文件，顺着可以找到config文件，读到数据库密码的。</p>
+<h2 id="第十一关-我和上一题有点像"><a href="#第十一关-我和上一题有点像" class="headerlink" title="第十一关:我和上一题有点像"></a>第十一关:我和上一题有点像</h2><p>boom，沙卡拉卡！<br>GET换成了POST<br><img src="/img/webug3/11.png" alt=""></p>
+<h2 id="第十二关-我系统密码忘记了！"><a href="#第十二关-我系统密码忘记了！" class="headerlink" title="第十二关:我系统密码忘记了！"></a>第十二关:我系统密码忘记了！</h2><p>请帮我找回在D盘下。<br>直接上传webshell<br><img src="/img/webug3/12.png" alt=""></p>
+<p>菜刀连接，跳转到D盘出错了</p>
+<ol>
+<li><p>新建一个用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># net user [username] [password] /add</span><br><span class="line">net user systemis systemis /add</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加到Administrators用户组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># net localgroup Administrators [username] /add</span><br><span class="line">net localgroup Administrators systemis /add</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启3389</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>mstsc连接远程桌面<br><img src="/img/webug3/13.png" alt=""></p>
+<p>还是访问不到D盘，设备未就绪，应该是没插入光盘吧</p>
+<h2 id="第十三关-XSS"><a href="#第十三关-XSS" class="headerlink" title="第十三关:XSS"></a>第十三关:XSS</h2><p>看看你能给我带来什么惊喜？<br><img src="/img/webug3/14.png" alt=""></p>
+<h2 id="第十四关-存储型XSS"><a href="#第十四关-存储型XSS" class="headerlink" title="第十四关:存储型XSS"></a>第十四关:存储型XSS</h2><p>suprise！<br>GET 换成 POST一样<br><img src="/img/webug3/15.png" alt=""></p>
+<h2 id="第十五关-什么？图片上传不了？"><a href="#第十五关-什么？图片上传不了？" class="headerlink" title="第十五关:什么？图片上传不了？"></a>第十五关:什么？图片上传不了？</h2><p>上传不了图片怎么办？<br>改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: image/png</span><br></pre></td></tr></table></figure></p>
+<p>得到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.85.128/pentest/test/11/upload/webshell0.php</span><br></pre></td></tr></table></figure></p>
+<h2 id="第十六关-明天双十一"><a href="#第十六关-明天双十一" class="headerlink" title="第十六关:明天双十一"></a>第十六关:明天双十一</h2><p>我从公司网络去剁手了！<br><img src="/img/webug3/16.png" alt=""></p>
+<p>想不到既需要host为10.10.10.10<br>又验证了referer是来自www.baidu.com<br>这里的设置真的不甚理解。</p>
+<h1 id="中级进阶"><a href="#中级进阶" class="headerlink" title="中级进阶"></a>中级进阶</h1><h2 id="第一关-出来点东西吧"><a href="#第一关-出来点东西吧" class="headerlink" title="第一关:出来点东西吧"></a>第一关:出来点东西吧</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../etc/passwd</span><br></pre></td></tr></table></figure>
+<p>系统是windows，所以应该是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../../../../WINDOWS/win.ini</span><br></pre></td></tr></table></figure></p>
+<p>因为是require_once，所以不能直接读index.php，这，不知应该怎么读了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=../../../../../../../../../../WINDOWS/win.ini</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/webug3/17.png" alt=""></p>
+<h2 id="第二关-提交方式是怎么样的啊？"><a href="#第二关-提交方式是怎么样的啊？" class="headerlink" title="第二关:提交方式是怎么样的啊？"></a>第二关:提交方式是怎么样的啊？</h2><p>pass !<br>一样<br><img src="/img/webug3/18.png" alt=""></p>
+<h2 id="第三关-我还是一个注入"><a href="#第三关-我还是一个注入" class="headerlink" title="第三关:我还是一个注入"></a>第三关:我还是一个注入</h2><p>怎么又TM注入？<br>有一个header注入<br><img src="/img/webug3/19.png" alt=""></p>
+<h2 id="第四关-APK里面有一个flag"><a href="#第四关-APK里面有一个flag" class="headerlink" title="第四关:APK里面有一个flag"></a>第四关:APK里面有一个flag</h2><p>看看apk</p>
+<ul>
+<li><p>apktool 作用：资源文件获取，可以提取出图片文件和布局文件进行使用查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apktool d -f [apk文件 ] [输出文件夹]</span><br><span class="line">apktool d -f test.apk test    </span><br><span class="line">重新打包成apk</span><br><span class="line">apktool b test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dex2jar 作用：将apk反编译成java源码（classes.dex转化成jar文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">windows</span><br><span class="line">.\dex2jar-2.0\d2j-dex2jar.bat .\output\test\classes.dex</span><br><span class="line">linux</span><br><span class="line">dex2jar classes.dex</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jd-gui 作用：查看APK中classes.dex转化成出的jar文件，即源码文件<br>直接用这个工具打开classes-dex2jar.jar</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return new StringBuilder(String.valueOf(new StringBuilder(String.valueOf(Base64.decode(&quot;YWZlOGU5MWI=&quot;, &quot;UTF-8&quot;))).append(Base64.decode(&quot;NGM1NGFkOGVi&quot;, &quot;UTF-8&quot;)).toString())).append(Base64.decode(&quot;MzA0M2UzNjY=&quot;, &quot;UTF-8&quot;)).toString() + Base64.decode(&quot;ZGJjYTA1Zg==&quot;, &quot;UTF-8&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>看到代码了，base64-decode一下<br>afe8e91b4c54ad8eb4c54ad8eb3043e366dbca05f</p>
+<h2 id="第五关-时间注入"><a href="#第五关-时间注入" class="headerlink" title="第五关:时间注入"></a>第五关:时间注入</h2><p>时间注入<br>时间盲注<br><img src="/img/webug3/20.png" alt=""></p>
+<h2 id="实战练习-DZ论坛"><a href="#实战练习-DZ论坛" class="headerlink" title="实战练习:DZ论坛"></a>实战练习:DZ论坛</h2><p>注入<br>实战题~好像搭建的不怎么OK，先不做</p>
+<h2 id="实战练习-aspcms"><a href="#实战练习-aspcms" class="headerlink" title="实战练习:aspcms"></a>实战练习:aspcms</h2><p>注入</p>
+<h2 id="实战练习-phpmyadmin"><a href="#实战练习-phpmyadmin" class="headerlink" title="实战练习:phpmyadmin"></a>实战练习:phpmyadmin</h2><p>任意文件包含漏洞</p>
+<h2 id="实战练习-齐博系统"><a href="#实战练习-齐博系统" class="headerlink" title="实战练习:齐博系统"></a>实战练习:齐博系统</h2><p>SQL注入</p>
+<h2 id="实战练习-海盗云商"><a href="#实战练习-海盗云商" class="headerlink" title="实战练习:海盗云商"></a>实战练习:海盗云商</h2><p>getshell</p>
+<h2 id="实战练习-PHP168-6-0"><a href="#实战练习-PHP168-6-0" class="headerlink" title="实战练习:PHP168 6.0"></a>实战练习:PHP168 6.0</h2><p>任意代码执行GET SHELL</p>
+<h2 id="实战练习-ecshop"><a href="#实战练习-ecshop" class="headerlink" title="实战练习:ecshop"></a>实战练习:ecshop</h2><p>/admin/shopinfo.php SQL注入</p>
+<h2 id="实战练习-ShopXp系统v3-x"><a href="#实战练习-ShopXp系统v3-x" class="headerlink" title="实战练习:ShopXp系统v3.x"></a>实战练习:ShopXp系统v3.x</h2><p>SQL注射漏洞</p>
+<h2 id="实战练习-Dcore-轻型CMS系统"><a href="#实战练习-Dcore-轻型CMS系统" class="headerlink" title="实战练习:Dcore(轻型CMS系统)"></a>实战练习:Dcore(轻型CMS系统)</h2><p>注入漏洞</p>
+<h2 id="实战练习-MetInfo-5-1-7"><a href="#实战练习-MetInfo-5-1-7" class="headerlink" title="实战练习:MetInfo 5.1.7"></a>实战练习:MetInfo 5.1.7</h2><p>任意文件包含漏洞可getshell</p>
+<h2 id="实战练习-Metinfo-5-3"><a href="#实战练习-Metinfo-5-3" class="headerlink" title="实战练习:Metinfo 5.3"></a>实战练习:Metinfo 5.3</h2><p>news.php盲注</p>
+<h1 id="实战拓展"><a href="#实战拓展" class="headerlink" title="实战拓展"></a>实战拓展</h1><h2 id="实战练习-Metinfo5-3"><a href="#实战练习-Metinfo5-3" class="headerlink" title="实战练习:Metinfo5.3"></a>实战练习:Metinfo5.3</h2><p>img.php盲注</p>
+<h2 id="实战练习-万众电子期刊在线阅读系统PHP和ASP"><a href="#实战练习-万众电子期刊在线阅读系统PHP和ASP" class="headerlink" title="实战练习:万众电子期刊在线阅读系统PHP和ASP"></a>实战练习:万众电子期刊在线阅读系统PHP和ASP</h2><p>SQL注入</p>
+<h2 id="实战练习-BEESCMS"><a href="#实战练习-BEESCMS" class="headerlink" title="实战练习:BEESCMS"></a>实战练习:BEESCMS</h2><p>sql注入</p>
+<h2 id="实战练习-ourphpV1-3-1"><a href="#实战练习-ourphpV1-3-1" class="headerlink" title="实战练习:ourphpV1.3.1"></a>实战练习:ourphpV1.3.1</h2><p>注入</p>
+<h2 id="实战练习-phpwind"><a href="#实战练习-phpwind" class="headerlink" title="实战练习:phpwind"></a>实战练习:phpwind</h2><p>版本命令执行漏洞</p>
+<h2 id="实战练习-metinfo-5-1以下"><a href="#实战练习-metinfo-5-1以下" class="headerlink" title="实战练习:metinfo 5.1以下"></a>实战练习:metinfo 5.1以下</h2><p>任意用户密码修改</p>
+<h2 id="实战练习-DZ3-2"><a href="#实战练习-DZ3-2" class="headerlink" title="实战练习:DZ3.2"></a>实战练习:DZ3.2</h2><p>存储型跨站</p>
+<h2 id="实战练习-DedeCMS"><a href="#实战练习-DedeCMS" class="headerlink" title="实战练习:DedeCMS"></a>实战练习:DedeCMS</h2><p>flink.php友情链接注入</p>
+<h2 id="实战练习-DedeCms"><a href="#实战练习-DedeCms" class="headerlink" title="实战练习:DedeCms"></a>实战练习:DedeCms</h2><p>recommend.php注入</p>
+<h2 id="实战练习-BEESCMS-1"><a href="#实战练习-BEESCMS-1" class="headerlink" title="实战练习:BEESCMS"></a>实战练习:BEESCMS</h2><p>注入</p>
+<h2 id="实战练习-海洋cms"><a href="#实战练习-海洋cms" class="headerlink" title="实战练习:海洋cms"></a>实战练习:海洋cms</h2><p>头部注入</p>
+<h2 id="实战练习-CVE-2006-7243"><a href="#实战练习-CVE-2006-7243" class="headerlink" title="实战练习:CVE-2006-7243"></a>实战练习:CVE-2006-7243</h2><p>php截断利用</p>
+<h2 id="实战练习-CVE-2013-3660"><a href="#实战练习-CVE-2013-3660" class="headerlink" title="实战练习:CVE-2013-3660"></a>实战练习:CVE-2013-3660</h2><p>本地提权</p>
+<h2 id="实战练习-IIS-6-0"><a href="#实战练习-IIS-6-0" class="headerlink" title="实战练习:IIS 6.0"></a>实战练习:IIS 6.0</h2><p>远程命令执行</p>
+<h2 id="实战练习-HFS"><a href="#实战练习-HFS" class="headerlink" title="实战练习:HFS"></a>实战练习:HFS</h2><p>第三方软件提权</p>
+<h2 id="实战练习-MYsql"><a href="#实战练习-MYsql" class="headerlink" title="实战练习:MYsql"></a>实战练习:MYsql</h2><p>数据库提权</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+            <a href="/tags/writeup/" rel="tag"># writeup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/强网杯-ctf-2017.html" rel="next" title="强网杯-ctf-2017">
+                <i class="fa fa-chevron-left"></i> 强网杯-ctf-2017
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/DVWA-writeup.html" rel="prev" title="DVWA writeup">
+                DVWA writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#渗透基础"><span class="nav-number">1.</span> <span class="nav-text">渗透基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一关-很简单的一个注入"><span class="nav-number">1.1.</span> <span class="nav-text">第一关:很简单的一个注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二关-从图片中你能找到什么？"><span class="nav-number">1.2.</span> <span class="nav-text">第二关:从图片中你能找到什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三关-你看到了什么？"><span class="nav-number">1.3.</span> <span class="nav-text">第三关:你看到了什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四关-告诉你了flang是5位数"><span class="nav-number">1.4.</span> <span class="nav-text">第四关:告诉你了flang是5位数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五关-一个优点小小的特殊的注入"><span class="nav-number">1.5.</span> <span class="nav-text">第五关:一个优点小小的特殊的注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六关-这关需要rmb购买哦"><span class="nav-number">1.6.</span> <span class="nav-text">第六关:这关需要rmb购买哦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七关-越权"><span class="nav-number">1.7.</span> <span class="nav-text">第七关:越权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八关-CSRF"><span class="nav-number">1.8.</span> <span class="nav-text">第八关:CSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第九关-URL跳转"><span class="nav-number">1.9.</span> <span class="nav-text">第九关:URL跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十关-文件下载"><span class="nav-number">1.10.</span> <span class="nav-text">第十关:文件下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一关-我和上一题有点像"><span class="nav-number">1.11.</span> <span class="nav-text">第十一关:我和上一题有点像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十二关-我系统密码忘记了！"><span class="nav-number">1.12.</span> <span class="nav-text">第十二关:我系统密码忘记了！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十三关-XSS"><span class="nav-number">1.13.</span> <span class="nav-text">第十三关:XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十四关-存储型XSS"><span class="nav-number">1.14.</span> <span class="nav-text">第十四关:存储型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十五关-什么？图片上传不了？"><span class="nav-number">1.15.</span> <span class="nav-text">第十五关:什么？图片上传不了？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十六关-明天双十一"><span class="nav-number">1.16.</span> <span class="nav-text">第十六关:明天双十一</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中级进阶"><span class="nav-number">2.</span> <span class="nav-text">中级进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一关-出来点东西吧"><span class="nav-number">2.1.</span> <span class="nav-text">第一关:出来点东西吧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二关-提交方式是怎么样的啊？"><span class="nav-number">2.2.</span> <span class="nav-text">第二关:提交方式是怎么样的啊？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三关-我还是一个注入"><span class="nav-number">2.3.</span> <span class="nav-text">第三关:我还是一个注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四关-APK里面有一个flag"><span class="nav-number">2.4.</span> <span class="nav-text">第四关:APK里面有一个flag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五关-时间注入"><span class="nav-number">2.5.</span> <span class="nav-text">第五关:时间注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-DZ论坛"><span class="nav-number">2.6.</span> <span class="nav-text">实战练习:DZ论坛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-aspcms"><span class="nav-number">2.7.</span> <span class="nav-text">实战练习:aspcms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-phpmyadmin"><span class="nav-number">2.8.</span> <span class="nav-text">实战练习:phpmyadmin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-齐博系统"><span class="nav-number">2.9.</span> <span class="nav-text">实战练习:齐博系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-海盗云商"><span class="nav-number">2.10.</span> <span class="nav-text">实战练习:海盗云商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-PHP168-6-0"><span class="nav-number">2.11.</span> <span class="nav-text">实战练习:PHP168 6.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-ecshop"><span class="nav-number">2.12.</span> <span class="nav-text">实战练习:ecshop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-ShopXp系统v3-x"><span class="nav-number">2.13.</span> <span class="nav-text">实战练习:ShopXp系统v3.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-Dcore-轻型CMS系统"><span class="nav-number">2.14.</span> <span class="nav-text">实战练习:Dcore(轻型CMS系统)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-MetInfo-5-1-7"><span class="nav-number">2.15.</span> <span class="nav-text">实战练习:MetInfo 5.1.7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-Metinfo-5-3"><span class="nav-number">2.16.</span> <span class="nav-text">实战练习:Metinfo 5.3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战拓展"><span class="nav-number">3.</span> <span class="nav-text">实战拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-Metinfo5-3"><span class="nav-number">3.1.</span> <span class="nav-text">实战练习:Metinfo5.3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-万众电子期刊在线阅读系统PHP和ASP"><span class="nav-number">3.2.</span> <span class="nav-text">实战练习:万众电子期刊在线阅读系统PHP和ASP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-BEESCMS"><span class="nav-number">3.3.</span> <span class="nav-text">实战练习:BEESCMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-ourphpV1-3-1"><span class="nav-number">3.4.</span> <span class="nav-text">实战练习:ourphpV1.3.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-phpwind"><span class="nav-number">3.5.</span> <span class="nav-text">实战练习:phpwind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-metinfo-5-1以下"><span class="nav-number">3.6.</span> <span class="nav-text">实战练习:metinfo 5.1以下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-DZ3-2"><span class="nav-number">3.7.</span> <span class="nav-text">实战练习:DZ3.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-DedeCMS"><span class="nav-number">3.8.</span> <span class="nav-text">实战练习:DedeCMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-DedeCms"><span class="nav-number">3.9.</span> <span class="nav-text">实战练习:DedeCms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-BEESCMS-1"><span class="nav-number">3.10.</span> <span class="nav-text">实战练习:BEESCMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-海洋cms"><span class="nav-number">3.11.</span> <span class="nav-text">实战练习:海洋cms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-CVE-2006-7243"><span class="nav-number">3.12.</span> <span class="nav-text">实战练习:CVE-2006-7243</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-CVE-2013-3660"><span class="nav-number">3.13.</span> <span class="nav-text">实战练习:CVE-2013-3660</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-IIS-6-0"><span class="nav-number">3.14.</span> <span class="nav-text">实战练习:IIS 6.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-HFS"><span class="nav-number">3.15.</span> <span class="nav-text">实战练习:HFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习-MYsql"><span class="nav-number">3.16.</span> <span class="nav-text">实战练习:MYsql</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

