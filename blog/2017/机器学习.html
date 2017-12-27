@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 绪论人类的强大 在于 经验 + 创新问题:是否能够让程序根据经验来改进自身以满足需求或外界的变化？机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。经验–&amp;gt;来自数据利用经验的方式–&amp;gt; 模型计算的手段–&amp;gt;从数据中产生模型的方法–&amp;gt;学习算法    Item1 Item2     data Different applications have differ">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2017/机器学习.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="1. 绪论人类的强大 在于 经验 + 创新问题:是否能够让程序根据经验来改进自身以满足需求或外界的变化？机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。经验–&amp;gt;来自数据利用经验的方式–&amp;gt; 模型计算的手段–&amp;gt;从数据中产生模型的方法–&amp;gt;学习算法    Item1 Item2     data Different applications have differ">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-27T18:38:32.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习">
+<meta name="twitter:description" content="1. 绪论人类的强大 在于 经验 + 创新问题:是否能够让程序根据经验来改进自身以满足需求或外界的变化？机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。经验–&amp;gt;来自数据利用经验的方式–&amp;gt; 模型计算的手段–&amp;gt;从数据中产生模型的方法–&amp;gt;学习算法    Item1 Item2     data Different applications have differ">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2017/机器学习.html"/>
+
+
+
+
+
+  <title>机器学习 | UltramanGaia's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2017/机器学习.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:38:27+08:00">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程/" itemprop="url" rel="index">
+                    <span itemprop="name">课程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<h1 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h1><h3 id="人类的强大-在于-经验-创新"><a href="#人类的强大-在于-经验-创新" class="headerlink" title="人类的强大 在于 经验 + 创新"></a>人类的强大 在于 <strong>经验</strong> + <strong>创新</strong></h3><h2 id="问题-是否能够让程序根据经验来改进自身以满足需求或外界的变化？"><a href="#问题-是否能够让程序根据经验来改进自身以满足需求或外界的变化？" class="headerlink" title="问题:是否能够让程序根据经验来改进自身以满足需求或外界的变化？"></a>问题:是否能够让程序根据<em>经验</em>来改进自身以满足需求或外界的变化？</h2><h2 id="机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。"><a href="#机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。" class="headerlink" title="机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。"></a>机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。</h2><p>经验–&gt;来自数据<br>利用经验的方式–&gt; 模型<br>计算的手段–&gt;从数据中产生模型的方法–&gt;学习算法</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Item1</th>
+<th style="text-align:center">Item2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">data</td>
+<td style="text-align:center">Different applications have different data.</td>
+</tr>
+<tr>
+<td style="text-align:center">model(function)</td>
+<td style="text-align:center">Define the model according to specific problem.</td>
+</tr>
+<tr>
+<td style="text-align:center">loss(prediction)</td>
+<td style="text-align:center">Using loss function to evaluation model</td>
+</tr>
+</tbody>
+</table>
+<h3 id="貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为数据集。"><a href="#貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为数据集。" class="headerlink" title="貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为数据集。"></a>貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为<strong>数据集</strong>。</h3><h3 id="监督学习原理"><a href="#监督学习原理" class="headerlink" title="监督学习原理"></a>监督学习原理</h3><h4 id="存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式"><a href="#存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式" class="headerlink" title="存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式"></a>存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式</h4><p>$$y=f(X)=\omega X+b$$</p>
+<h4 id="该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况"><a href="#该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况" class="headerlink" title="该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况"></a>该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. define a set of function</span><br><span class="line">2. goodless of function</span><br><span class="line">3. pick the best function</span><br></pre></td></tr></table></figure>
+<h3 id="分类与回归"><a href="#分类与回归" class="headerlink" title="分类与回归"></a>分类与回归</h3><p><strong>分类</strong>：预测的是离散值<br><strong>回归</strong>：预测的是连续值</p>
+<h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><h3 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h3><h4 id="奥卡姆剃刀-Occam’s-razor"><a href="#奥卡姆剃刀-Occam’s-razor" class="headerlink" title="奥卡姆剃刀(Occam’s razor)"></a>奥卡姆剃刀(Occam’s razor)</h4><p>若有多个假设与观察一致，则选最简单的那一个。</p>
+<p>机器学习的目标是使学得的模型能很好地适用于<em>新样本</em>。</p>
+<h1 id="2-模型评估与选择"><a href="#2-模型评估与选择" class="headerlink" title="2. 模型评估与选择"></a>2. 模型评估与选择</h1><h3 id="经验误差与过拟合"><a href="#经验误差与过拟合" class="headerlink" title="经验误差与过拟合"></a>经验误差与过拟合</h3><p>error rate=错误率：分类错误的样本数占样本总数的比例<br>accuracy=精度：分类正确的样本数占样本总数的比例<br>error=误差：学习器的实际预测输出与样本的真实输出之间的差异<br>training error=训练误差/empirical error=经验误差：在训练集上的误差<br>generalization error=泛化误差：在新样本上的误差</p>
+<h3 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h3><h4 id="留出法hold-out"><a href="#留出法hold-out" class="headerlink" title="留出法hold-out"></a>留出法hold-out</h4><p>直接将数据集划分成互斥的两个集合<br>一般需要若干次随机划分，取平均值。2/3～4/5样本用于训练</p>
+<h4 id="交叉验证法corss-validation"><a href="#交叉验证法corss-validation" class="headerlink" title="交叉验证法corss validation"></a>交叉验证法corss validation</h4><p>将数据集划分成k个大小相似的互斥子集，k-1个作为训练集，另外1个作为测试集<br>k折交叉验证 k-fold cross validation</p>
+<h5 id="10次10折交叉验证"><a href="#10次10折交叉验证" class="headerlink" title="10次10折交叉验证"></a>10次10折交叉验证</h5><h5 id="留一法Leave-One-out"><a href="#留一法Leave-One-out" class="headerlink" title="留一法Leave-One-out"></a>留一法Leave-One-out</h5><p>n个样本，分成n份的交叉验证。</p>
+<h4 id="自助法-bootstrapping"><a href="#自助法-bootstrapping" class="headerlink" title="自助法 bootstrapping"></a>自助法 bootstrapping</h4><p>自助采样法(bootstrap samping)<br>包外估计(out-of-bag estimate)<br>自助法对数据集较小、难以有效划分训练集和测试集时很有用。但是，改变了初始数据集的分布，引入了估计偏差。</p>
+<h3 id="调参与最终模型"><a href="#调参与最终模型" class="headerlink" title="调参与最终模型"></a>调参与最终模型</h3><p>parameter tuning=调参<br>validation set=验证集</p>
+<h3 id="性能度量performance-measure"><a href="#性能度量performance-measure" class="headerlink" title="性能度量performance measure"></a>性能度量performance measure</h3><p>回归问题中最常见的性能度量是均方误差mean squared error</p>
+<h3 id="查准率-精确率precision、查全率-召回率recall、F1"><a href="#查准率-精确率precision、查全率-召回率recall、F1" class="headerlink" title="查准率=精确率precision、查全率=召回率recall、F1"></a>查准率=精确率precision、查全率=召回率recall、F1</h3><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">预测正例</td>
+<td style="text-align:center">预测反例</td>
+</tr>
+<tr>
+<td style="text-align:center">真实正例</td>
+<td style="text-align:center">真正例TP</td>
+<td style="text-align:center">假反例FN</td>
+</tr>
+<tr>
+<td style="text-align:center">真实反例</td>
+<td style="text-align:center">假正例FP</td>
+<td style="text-align:center">真反例TN</td>
+</tr>
+</tbody>
+</table>
+<p>$$P = { TP \over TP + FN}.$$<br>$$R= { TP \over TP+FN}.$$</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/Kali-Linux-工具目录.html" rel="next" title="Kali Linux 工具目录">
+                <i class="fa fa-chevron-left"></i> Kali Linux 工具目录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-绪论"><span class="nav-number">1.</span> <span class="nav-text">1. 绪论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#人类的强大-在于-经验-创新"><span class="nav-number">1.0.1.</span> <span class="nav-text">人类的强大 在于 经验 + 创新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题-是否能够让程序根据经验来改进自身以满足需求或外界的变化？"><span class="nav-number">1.1.</span> <span class="nav-text">问题:是否能够让程序根据经验来改进自身以满足需求或外界的变化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。"><span class="nav-number">1.2.</span> <span class="nav-text">机器学习致力于研究通过计算的手段，利用经验来改进自己的性能。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为数据集。"><span class="nav-number">1.2.1.</span> <span class="nav-text">貌似现在接触的机器学习大多数都是针对结构化的数据，我们称一条结构化的数据为一条记录或一个样本，记录的集合为数据集。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习原理"><span class="nav-number">1.2.2.</span> <span class="nav-text">监督学习原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">存在某个不为人知的规律，即y与X有关系，我们猜测是满足下面这种形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">该公式代表了一系列的具体的公式，我们需要通过一些已知的y0和X0的关系来逐步修改公式来逼近真实情况</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类与回归"><span class="nav-number">1.2.3.</span> <span class="nav-text">分类与回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无监督学习"><span class="nav-number">1.2.4.</span> <span class="nav-text">无监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚类"><span class="nav-number">1.2.5.</span> <span class="nav-text">聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#奥卡姆剃刀-Occam’s-razor"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">奥卡姆剃刀(Occam’s razor)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-模型评估与选择"><span class="nav-number">2.</span> <span class="nav-text">2. 模型评估与选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#经验误差与过拟合"><span class="nav-number">2.0.1.</span> <span class="nav-text">经验误差与过拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评估方法"><span class="nav-number">2.0.2.</span> <span class="nav-text">评估方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#留出法hold-out"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">留出法hold-out</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交叉验证法corss-validation"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">交叉验证法corss validation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#10次10折交叉验证"><span class="nav-number">2.0.2.2.1.</span> <span class="nav-text">10次10折交叉验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#留一法Leave-One-out"><span class="nav-number">2.0.2.2.2.</span> <span class="nav-text">留一法Leave-One-out</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自助法-bootstrapping"><span class="nav-number">2.0.2.3.</span> <span class="nav-text">自助法 bootstrapping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调参与最终模型"><span class="nav-number">2.0.3.</span> <span class="nav-text">调参与最终模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能度量performance-measure"><span class="nav-number">2.0.4.</span> <span class="nav-text">性能度量performance measure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查准率-精确率precision、查全率-召回率recall、F1"><span class="nav-number">2.0.5.</span> <span class="nav-text">查准率=精确率precision、查全率=召回率recall、F1</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
