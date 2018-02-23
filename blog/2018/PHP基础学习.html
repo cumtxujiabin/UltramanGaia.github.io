@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python,numpy," />
+  <meta name="keywords" content="PHP," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="Burp Suite是一个用于攻击web应用程序的集成平台我们来学习下如何编写插件增强Burp Suite的功能 开发步骤Step 1 导出SDK包 Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码 网上找了个代码，测试下12345678910111213141516171819202122232425262728293031323">
-<meta name="keywords" content="python,numpy">
+<meta name="description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
+<meta name="keywords" content="PHP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Burp Suite插件开发">
-<meta property="og:url" content="http://ultramangaia.github.io/blog/2017/Burp-Suite插件开发.html">
+<meta property="og:title" content="PHP基础学习">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2018/PHP基础学习.html">
 <meta property="og:site_name" content="UltramanGaia&#39;s Blog">
-<meta property="og:description" content="Burp Suite是一个用于攻击web应用程序的集成平台我们来学习下如何编写插件增强Burp Suite的功能 开发步骤Step 1 导出SDK包 Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码 网上找了个代码，测试下12345678910111213141516171819202122232425262728293031323">
+<meta property="og:description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ultramangaia.github.io/img/burpsuite/1.png">
-<meta property="og:image" content="http://ultramangaia.github.io/img/burpsuite/2.png">
-<meta property="og:updated_time" content="2017-12-23T11:10:38.000Z">
+<meta property="og:updated_time" content="2018-01-09T07:24:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Burp Suite插件开发">
-<meta name="twitter:description" content="Burp Suite是一个用于攻击web应用程序的集成平台我们来学习下如何编写插件增强Burp Suite的功能 开发步骤Step 1 导出SDK包 Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码 网上找了个代码，测试下12345678910111213141516171819202122232425262728293031323">
-<meta name="twitter:image" content="http://ultramangaia.github.io/img/burpsuite/1.png">
+<meta name="twitter:title" content="PHP基础学习">
+<meta name="twitter:description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://ultramangaia.github.io/blog/2017/Burp-Suite插件开发.html"/>
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2018/PHP基础学习.html"/>
 
 
 
 
 
-  <title>Burp Suite插件开发 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>PHP基础学习 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -256,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2017/Burp-Suite插件开发.html">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2018/PHP基础学习.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="UltramanGaia">
@@ -273,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Burp Suite插件开发</h1>
+          <h1 class="post-title" itemprop="name headline">PHP基础学习</h1>
         
 
         <div class="post-meta">
@@ -285,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T18:13:49+08:00">
-                2017-11-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T01:11:37+08:00">
+                2018-01-09
               </time>
             
 
@@ -345,12 +342,14 @@
       
 
       
-        <h1 id="Burp-Suite是一个用于攻击web应用程序的集成平台"><a href="#Burp-Suite是一个用于攻击web应用程序的集成平台" class="headerlink" title="Burp Suite是一个用于攻击web应用程序的集成平台"></a>Burp Suite是一个用于攻击web应用程序的集成平台</h1><p>我们来学习下如何编写插件增强Burp Suite的功能</p>
-<h1 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h1><h2 id="Step-1-导出SDK包"><a href="#Step-1-导出SDK包" class="headerlink" title="Step 1 导出SDK包"></a>Step 1 导出SDK包</h2><p><img src="/img/burpsuite/1.png" alt=""></p>
-<h2 id="Step-2-新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码"><a href="#Step-2-新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码" class="headerlink" title="Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码"></a>Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码</h2><p><img src="/img/burpsuite/2.png" alt=""></p>
-<h2 id="网上找了个代码，测试下"><a href="#网上找了个代码，测试下" class="headerlink" title="网上找了个代码，测试下"></a>网上找了个代码，测试下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">package InformationGather;</span><br><span class="line">import burp.*;</span><br><span class="line">import java.awt.Component;</span><br><span class="line">import java.awt.event.MouseAdapter;</span><br><span class="line">import java.awt.event.MouseEvent;</span><br><span class="line">import java.io.PrintWriter;</span><br><span class="line">import javax.swing.JButton;</span><br><span class="line">import javax.swing.JPanel;</span><br><span class="line">import javax.swing.SwingUtilities;</span><br><span class="line">public class BurpExtender implements IBurpExtender, ITab &#123;</span><br><span class="line">    public PrintWriter stdout;</span><br><span class="line">    public IExtensionHelpers hps;</span><br><span class="line">    public IBurpExtenderCallbacks cbs;</span><br><span class="line">    public JPanel jPanelMain;</span><br><span class="line">    @Override</span><br><span class="line">    public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks)         &#123;</span><br><span class="line">        callbacks.setExtensionName(&quot;BurpExtender&quot;);</span><br><span class="line">        this.hps = callbacks.getHelpers();</span><br><span class="line">        this.cbs = callbacks;</span><br><span class="line">        this.stdout = new PrintWriter(callbacks.getStdout(), true);</span><br><span class="line">        this.stdout.println(&quot;hello burp!&quot;);</span><br><span class="line">        SwingUtilities.invokeLater(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                jPanelMain = new JPanel();</span><br><span class="line">                JButton jButton = new JButton(&quot;老司机,快点我!&quot;);</span><br><span class="line">                jButton.addMouseListener(new MouseAdapter() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void mouseClicked(MouseEvent e)&#123;</span><br><span class="line">                        stdout.println(&quot;哔...&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                // 将按钮添加到 主面板 jPanelMain 中.</span><br><span class="line">                jPanelMain.add(jButton);</span><br><span class="line">                // 设置自定义组件并添加标签</span><br><span class="line">                cbs.customizeUiComponent(jPanelMain);</span><br><span class="line">                cbs.addSuiteTab(BurpExtender.this);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    // 实现 ITab 接口的 getTabCaption 方法</span><br><span class="line">    @Override</span><br><span class="line">    public String getTabCaption() &#123;</span><br><span class="line">        return &quot;Burp 标签测试&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    // 实现 ITab 接口的 getUiComponent 方法</span><br><span class="line">    @Override</span><br><span class="line">    public Component getUiComponent() &#123;</span><br><span class="line">        return jPanelMain;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Step-3-导出jar包"><a href="#Step-3-导出jar包" class="headerlink" title="Step 3 导出jar包"></a>Step 3 导出jar包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File-&gt;project stucture -&gt; Artifacts-&gt;&quot;+&quot;,选jar 选择from modules with dependencies，然后会有配置窗口出现，配置完成后，勾选Build on make &gt;ok保存</span><br><span class="line">Build-&gt;make project</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.tuicool.com/articles/aaaa6fA" target="_blank" rel="noopener">BurpSuite插件开发指南之 API 上篇</a><br><a href="http://www.tuicool.com/articles/eU7vUjA" target="_blank" rel="noopener">BurpSuite插件开发指南之 API 下篇</a><br><a href="http://www.php0.net/index.php?a=show&amp;c=index&amp;catid=6&amp;id=19924&amp;m=content" target="_blank" rel="noopener">BurpSuite插件开发指南之Java篇</a><br><a href="http://www.tuicool.com/articles/BF7BNzV" target="_blank" rel="noopener">BurpSuite插件开发指南之 Python 篇</a></p>
+        <h1 id="PHP-是什么？"><a href="#PHP-是什么？" class="headerlink" title="PHP 是什么？"></a>PHP 是什么？</h1><p>PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。</p>
+<h2 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h2><p>PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $DOCUMENT_ROOT，又如，使用 $_GET[‘id’] 来代替 $id 从 URL <a href="http://www.example.com/test.php?id=3" target="_blank" rel="noopener">http://www.example.com/test.php?id=3</a> 中获取 id 值，亦或使用 $_ENV[‘HOME’] 来代替 $HOME 获取环境变量 HOME 的值。</p>
+<h3 id="超全局变量-superglobals-或称-自动全局变量-autoglobals"><a href="#超全局变量-superglobals-或称-自动全局变量-autoglobals" class="headerlink" title="超全局变量 superglobals 或称 自动全局变量 autoglobals"></a>超全局变量 superglobals 或称 自动全局变量 autoglobals</h3><p>PHP 4.1.0 后存在<br>$HTTP_*_VARS仍存在，直到PHP 5.4.0 后就没了<br>|Name|Description|<br>|:-:|:-:|<br>|$GLOBALS|一个包含了全部变量的全局组合数组。变量的名字就是数组的键|<br>|$_SERVER|包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组|<br>|$_GET|通过 URL 参数传递给当前脚本的变量的数组|<br>|$_POST|当 HTTP POST 请求的 Content-Type 是 application/x-www-form-urlencoded 或 multipart/form-data 时，会将变量以关联数组形式传入当前脚本|<br>|$_FILES|通过 HTTP POST 方式上传到当前脚本的项目的数组|<br>|$_COOKIE|通过 HTTP Cookies 方式传递给当前脚本的变量的数组|<br>|$_SESSION|当前脚本可用 SESSION 变量的数组|<br>|$_REQUEST|默认情况下包含了 $_GET，$_POST 和 $_COOKIE 的数组|<br>|$_ENV|通过环境方式传递给当前脚本的变量的数组|</p>
+<p>GET 是通过 urldecode() 传递的。</p>
+<h4 id="拓展后缀名"><a href="#拓展后缀名" class="headerlink" title="拓展后缀名"></a>拓展后缀名</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;\.ph(p[2-6]?|tml)$&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+<p>可以将 .phps 文件由 PHP 源码过滤器处理，使得其在显示时可以高亮源码，设置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;\.phps$&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php-source</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>mod_rewrite 也有助于将那些不需要运行的 .php 文件的源码高亮显示，而并不需要将他们更名为 .phps 文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*\.php)s$ $1 [H=application/x-httpd-php-source]</span><br></pre></td></tr></table></figure></p>
+<p>不要在正式生产运营的系统上启动 PHP 源码过滤器，因为这可能泄露系统机密或者嵌入的代码中的敏感信息。</p>
 
       
     </div>
@@ -368,9 +367,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
-            <a href="/tags/numpy/" rel="tag"># numpy</a>
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
           
         </div>
       
@@ -383,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/IT项目管理.html" rel="next" title="IT项目管理">
-                <i class="fa fa-chevron-left"></i> IT项目管理
+              <a href="/blog/2018/wget进行整站下载.html" rel="next" title="wget进行整站下载">
+                <i class="fa fa-chevron-left"></i> wget进行整站下载
               </a>
             
           </div>
@@ -392,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2017/pwn2win-ctf-2017.html" rel="prev" title="pwn2win-ctf-2017">
-                pwn2win-ctf-2017 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Burp-Suite是一个用于攻击web应用程序的集成平台"><span class="nav-number">1.</span> <span class="nav-text">Burp Suite是一个用于攻击web应用程序的集成平台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开发步骤"><span class="nav-number">2.</span> <span class="nav-text">开发步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-导出SDK包"><span class="nav-number">2.1.</span> <span class="nav-text">Step 1 导出SDK包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码"><span class="nav-number">2.2.</span> <span class="nav-text">Step 2 新建一个java项目，将刚刚导出的burp目录复制到src目录下，再创建一个包，里面放我们自己的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网上找了个代码，测试下"><span class="nav-number">2.3.</span> <span class="nav-text">网上找了个代码，测试下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-导出jar包"><span class="nav-number">2.4.</span> <span class="nav-text">Step 3 导出jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">2.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-是什么？"><span class="nav-number">1.</span> <span class="nav-text">PHP 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预定义变量"><span class="nav-number">1.1.</span> <span class="nav-text">预定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#超全局变量-superglobals-或称-自动全局变量-autoglobals"><span class="nav-number">1.1.1.</span> <span class="nav-text">超全局变量 superglobals 或称 自动全局变量 autoglobals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拓展后缀名"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">拓展后缀名</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
