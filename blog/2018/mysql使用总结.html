@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
-<meta name="keywords" content="PHP">
+<meta name="description" content="MySQL密码的恢复方法之一123456789101112131415161718191．首先确认服务器出于安全的状态，也就是没有人能够任意地连接MySQL数据库。 因为在重新设置MySQL的root密码的期间，MySQL数据库完全出于没有密码保护的 状态下，其他的用户也可以任意地登录和修改MySQL的信息。可以采用将MySQL对外的端口封闭，并且停止Apache以及所有的用户进程的方法实现服务器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP基础学习">
-<meta property="og:url" content="http://ultramangaia.github.io/blog/2018/PHP基础学习.html">
+<meta property="og:title" content="mysql使用总结">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2018/mysql使用总结.html">
 <meta property="og:site_name" content="UltramanGaia&#39;s Blog">
-<meta property="og:description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
+<meta property="og:description" content="MySQL密码的恢复方法之一123456789101112131415161718191．首先确认服务器出于安全的状态，也就是没有人能够任意地连接MySQL数据库。 因为在重新设置MySQL的root密码的期间，MySQL数据库完全出于没有密码保护的 状态下，其他的用户也可以任意地登录和修改MySQL的信息。可以采用将MySQL对外的端口封闭，并且停止Apache以及所有的用户进程的方法实现服务器">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-09T07:24:34.000Z">
+<meta property="og:updated_time" content="2018-03-06T04:39:58.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP基础学习">
-<meta name="twitter:description" content="PHP 是什么？PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。 预定义变量PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $D">
+<meta name="twitter:title" content="mysql使用总结">
+<meta name="twitter:description" content="MySQL密码的恢复方法之一123456789101112131415161718191．首先确认服务器出于安全的状态，也就是没有人能够任意地连接MySQL数据库。 因为在重新设置MySQL的root密码的期间，MySQL数据库完全出于没有密码保护的 状态下，其他的用户也可以任意地登录和修改MySQL的信息。可以采用将MySQL对外的端口封闭，并且停止Apache以及所有的用户进程的方法实现服务器">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://ultramangaia.github.io/blog/2018/PHP基础学习.html"/>
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2018/mysql使用总结.html"/>
 
 
 
 
 
-  <title>PHP基础学习 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>mysql使用总结 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -253,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2018/PHP基础学习.html">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2018/mysql使用总结.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="UltramanGaia">
@@ -270,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP基础学习</h1>
+          <h1 class="post-title" itemprop="name headline">mysql使用总结</h1>
         
 
         <div class="post-meta">
@@ -282,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T01:11:37+08:00">
-                2018-01-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T12:37:52+08:00">
+                2018-03-06
               </time>
             
 
@@ -292,28 +291,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/教程/" itemprop="url" rel="index">
-                    <span itemprop="name">教程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -342,15 +319,11 @@
       
 
       
-        <h1 id="PHP-是什么？"><a href="#PHP-是什么？" class="headerlink" title="PHP 是什么？"></a>PHP 是什么？</h1><p>PHP（“PHP: Hypertext Preprocessor”，超文本预处理器的字母缩写）是一种被广泛应用的开放源代码的多用途脚本语言，它可嵌入到 HTML中，尤其适合 web 开发。</p>
-<h2 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h2><p>PHP4.2.0 后 register_global默认为off，为了得到 DOCUMENT_ROOT 的值，将必须使用 $_SERVER[‘DOCUMENT_ROOT’] 代替 $DOCUMENT_ROOT，又如，使用 $_GET[‘id’] 来代替 $id 从 URL <a href="http://www.example.com/test.php?id=3" target="_blank" rel="noopener">http://www.example.com/test.php?id=3</a> 中获取 id 值，亦或使用 $_ENV[‘HOME’] 来代替 $HOME 获取环境变量 HOME 的值。</p>
-<h3 id="超全局变量-superglobals-或称-自动全局变量-autoglobals"><a href="#超全局变量-superglobals-或称-自动全局变量-autoglobals" class="headerlink" title="超全局变量 superglobals 或称 自动全局变量 autoglobals"></a>超全局变量 superglobals 或称 自动全局变量 autoglobals</h3><p>PHP 4.1.0 后存在<br>$HTTP_*_VARS仍存在，直到PHP 5.4.0 后就没了<br>|Name|Description|<br>|:-:|:-:|<br>|$GLOBALS|一个包含了全部变量的全局组合数组。变量的名字就是数组的键|<br>|$_SERVER|包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组|<br>|$_GET|通过 URL 参数传递给当前脚本的变量的数组|<br>|$_POST|当 HTTP POST 请求的 Content-Type 是 application/x-www-form-urlencoded 或 multipart/form-data 时，会将变量以关联数组形式传入当前脚本|<br>|$_FILES|通过 HTTP POST 方式上传到当前脚本的项目的数组|<br>|$_COOKIE|通过 HTTP Cookies 方式传递给当前脚本的变量的数组|<br>|$_SESSION|当前脚本可用 SESSION 变量的数组|<br>|$_REQUEST|默认情况下包含了 $_GET，$_POST 和 $_COOKIE 的数组|<br>|$_ENV|通过环境方式传递给当前脚本的变量的数组|</p>
-<p>GET 是通过 urldecode() 传递的。</p>
-<h4 id="拓展后缀名"><a href="#拓展后缀名" class="headerlink" title="拓展后缀名"></a>拓展后缀名</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;\.ph(p[2-6]?|tml)$&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-<p>可以将 .phps 文件由 PHP 源码过滤器处理，使得其在显示时可以高亮源码，设置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;\.phps$&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php-source</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>mod_rewrite 也有助于将那些不需要运行的 .php 文件的源码高亮显示，而并不需要将他们更名为 .phps 文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*\.php)s$ $1 [H=application/x-httpd-php-source]</span><br></pre></td></tr></table></figure></p>
-<p>不要在正式生产运营的系统上启动 PHP 源码过滤器，因为这可能泄露系统机密或者嵌入的代码中的敏感信息。</p>
-
+        <h2 id="MySQL密码的恢复方法之一"><a href="#MySQL密码的恢复方法之一" class="headerlink" title="MySQL密码的恢复方法之一"></a>MySQL密码的恢复方法之一</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1．首先确认服务器出于安全的状态，也就是没有人能够任意地连接MySQL数据库。 因为在重新设置MySQL的root密码的期间，MySQL数据库完全出于没有密码保护的 状态下，其他的用户也可以任意地登录和修改MySQL的信息。可以采用将MySQL对外的端口封闭，并且停止Apache以及所有的用户进程的方法实现服务器的准安全状态。最安全的状态是到服务器的Console上面操作，并且拔掉网线。</span><br><span class="line">2．修改MySQL的登录设置： </span><br><span class="line"># vi /etc/my.cnf </span><br><span class="line">在[mysqld]的段中加上一句：skip-grant-tables 保存并且退出vi。</span><br><span class="line">3．重新启动mysqld </span><br><span class="line"># /etc/init.d/mysqld restart ( service mysqld restart )</span><br><span class="line">4．登录并修改MySQL的root密码</span><br><span class="line">mysql&gt; USE mysql ; </span><br><span class="line">mysql&gt; UPDATE user SET Password = password ( &apos;new-password&apos; ) WHERE User = &apos;root&apos; ; </span><br><span class="line">mysql&gt; flush privileges ; </span><br><span class="line">mysql&gt; quit</span><br><span class="line">5．将MySQL的登录设置修改回来 </span><br><span class="line"># vi /etc/my.cnf </span><br><span class="line">将刚才在[mysqld]的段中加上的skip-grant-tables删除 </span><br><span class="line">保存并且退出vi。</span><br><span class="line">6．重新启动mysqld </span><br><span class="line"># /etc/init.d/mysqld restart  ( service mysqld restart )</span><br><span class="line">7．恢复服务器的正常工作状态</span><br><span class="line">将步骤一中的操作逆向操作。恢复服务器的工作状态。</span><br></pre></td></tr></table></figure>
+<h2 id="MySQL密码的恢复方法之二"><a href="#MySQL密码的恢复方法之二" class="headerlink" title="MySQL密码的恢复方法之二"></a>MySQL密码的恢复方法之二</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">如果忘记了MySQL的root密码，可以用以下方法重新设置：</span><br><span class="line">1. KILL掉系统里的MySQL进程； </span><br><span class="line">killall -TERM mysqld</span><br><span class="line">2. 用以下命令启动MySQL，以不检查权限的方式启动； </span><br><span class="line">safe_mysqld --skip-grant-tables &amp;</span><br><span class="line">3. 然后用空密码方式使用root用户登录 MySQL； </span><br><span class="line">mysql -u root</span><br><span class="line">4. 修改root用户的密码； </span><br><span class="line">mysql&gt; update mysql.user set password=PASSWORD(&apos;新密码&apos;) where User=&apos;root&apos;; </span><br><span class="line">mysql&gt; flush privileges; </span><br><span class="line">mysql&gt; quit </span><br><span class="line">重新启动MySQL，就可以使用新密码登录了</span><br></pre></td></tr></table></figure>
+<h2 id="MySQL密码的恢复方法三"><a href="#MySQL密码的恢复方法三" class="headerlink" title="MySQL密码的恢复方法三"></a>MySQL密码的恢复方法三</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">有可能你的系统没有 safe_mysqld 程序(比如我现在用的 ubuntu操作系统, apt-get安装的mysql) , 下面方法可以恢复</span><br><span class="line">1. 停止mysqld； </span><br><span class="line">/etc/init.d/mysql stop</span><br><span class="line">(您可能有其它的方法,总之停止mysqld的运行就可以了)</span><br><span class="line">2. 用以下命令启动MySQL，以不检查权限的方式启动； </span><br><span class="line">mysqld --skip-grant-tables &amp;</span><br><span class="line">3. 然后用空密码方式使用root用户登录 MySQL； </span><br><span class="line">mysql -u root</span><br><span class="line">4. 修改root用户的密码； </span><br><span class="line">mysql&gt; update mysql.user set password=PASSWORD(&apos;newpassword&apos;) where User=&apos;root&apos;; </span><br><span class="line">mysql&gt; flush privileges; </span><br><span class="line">mysql&gt; quit </span><br><span class="line">重新启动MySQL</span><br><span class="line">/etc/init.d/mysql restart</span><br><span class="line">就可以使用新密码 newpassword 登录了。</span><br></pre></td></tr></table></figure>
+<h2 id="导出数据库"><a href="#导出数据库" class="headerlink" title="导出数据库"></a>导出数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">直接使用命令：</span><br><span class="line">mysqldump -u root -p abc &gt;abc.sql</span><br><span class="line">然后回车输入密码就可以了；</span><br><span class="line">mysqldump -u 数据库链接用户名 -p  目标数据库 &gt; 存储的文件名</span><br></pre></td></tr></table></figure>
+<h2 id="导入数据库（sql文件）"><a href="#导入数据库（sql文件）" class="headerlink" title="导入数据库（sql文件）"></a>导入数据库（sql文件）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -u 用户名 -p  数据库名 &lt; 数据库名.sql</span><br><span class="line">mysql -u abc -p abc &lt; abc.sql</span><br><span class="line">注意sql文件必须在当前目录下，如果不在当前目录下需要在&lt; 之后加上具体sql文件路径</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -365,12 +338,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/PHP/" rel="tag"># PHP</a>
-          
-        </div>
-      
 
       
       
@@ -380,8 +347,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/wget进行整站下载.html" rel="next" title="wget进行整站下载">
-                <i class="fa fa-chevron-left"></i> wget进行整站下载
+              <a href="/blog/2018/实验吧web-writeup.html" rel="next" title="实验吧web-writeup">
+                <i class="fa fa-chevron-left"></i> 实验吧web-writeup
               </a>
             
           </div>
@@ -390,8 +357,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/SQL注入.html" rel="prev" title="SQL注入">
-                SQL注入 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/PHP反序列化.html" rel="prev" title="PHP反序列化">
+                PHP反序列化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,7 +497,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-是什么？"><span class="nav-number">1.</span> <span class="nav-text">PHP 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预定义变量"><span class="nav-number">1.1.</span> <span class="nav-text">预定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#超全局变量-superglobals-或称-自动全局变量-autoglobals"><span class="nav-number">1.1.1.</span> <span class="nav-text">超全局变量 superglobals 或称 自动全局变量 autoglobals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拓展后缀名"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">拓展后缀名</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL密码的恢复方法之一"><span class="nav-number">1.</span> <span class="nav-text">MySQL密码的恢复方法之一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL密码的恢复方法之二"><span class="nav-number">2.</span> <span class="nav-text">MySQL密码的恢复方法之二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL密码的恢复方法三"><span class="nav-number">3.</span> <span class="nav-text">MySQL密码的恢复方法三</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出数据库"><span class="nav-number">4.</span> <span class="nav-text">导出数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入数据库（sql文件）"><span class="nav-number">5.</span> <span class="nav-text">导入数据库（sql文件）</span></a></li></ol></div>
             
 
           </div>
