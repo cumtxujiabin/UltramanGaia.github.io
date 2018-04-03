@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181">
+<meta name="description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181 ubuntu@localhost">
 <meta name="keywords" content="ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh反向连接和正向连接">
 <meta property="og:url" content="http://ultramangaia.github.io/blog/2018/ssh反向连接和正向连接.html">
 <meta property="og:site_name" content="UltramanGaia&#39;s Blog">
-<meta property="og:description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181">
+<meta property="og:description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181 ubuntu@localhost">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-28T07:12:47.138Z">
+<meta property="og:updated_time" content="2018-03-26T02:10:28.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh反向连接和正向连接">
-<meta name="twitter:description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181">
+<meta name="twitter:description" content="内网机器A 127.0.0.1外网机器B 118.89.45.1 A机器1ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1 B机器1ssh -fCNL *:5010:localhost:7181 ubuntu@localhost">
 
 
 
@@ -344,7 +344,7 @@
       
         <p>内网机器A 127.0.0.1<br>外网机器B 118.89.45.1</p>
 <p>A机器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fCNR 7181:localhost:80 ubuntu@118.89.45.1</span><br></pre></td></tr></table></figure></p>
-<p>B机器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fCNL *:5010:localhost:7181</span><br></pre></td></tr></table></figure></p>
+<p>B机器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fCNL *:5010:localhost:7181 ubuntu@localhost</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -459,7 +459,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -481,7 +481,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
