@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,,,,,,," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第一处（Failed）基本原理是语句写入 inc 文件中，然后包含进来。 漏洞分析首先，我们需要找到一个写文件的地方，我的理解 inc 文件是对include file 的缩写，所以如果能够控制写入的这个文件内容，一般能够找到include它的地方。 注意，下面提到的操作需要先以管理员身份登录后台。 找到一个写入inc文件的地方，可以知道，这里控制了LoadSource的输入即可控制写入的文件内容">
+<meta name="keywords" content="信息安全 漏洞分析">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DedeCMS5-7挖掘后台getshell漏洞">
+<meta property="og:url" content="http://ultramangaia.github.io/img/dedecms/DedeCMS5-7挖掘后台getshell漏洞.html">
+<meta property="og:site_name" content="UltramanGaia&#39;s Blog">
+<meta property="og:description" content="第一处（Failed）基本原理是语句写入 inc 文件中，然后包含进来。 漏洞分析首先，我们需要找到一个写文件的地方，我的理解 inc 文件是对include file 的缩写，所以如果能够控制写入的这个文件内容，一般能够找到include它的地方。 注意，下面提到的操作需要先以管理员身份登录后台。 找到一个写入inc文件的地方，可以知道，这里控制了LoadSource的输入即可控制写入的文件内容">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/20.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/21.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/22.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/23.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/24.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/25.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/26.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/27.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/28.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/29.png">
+<meta property="og:image" content="http://ultramangaia.github.io/img/dedecms/30.png">
+<meta property="og:updated_time" content="2018-04-16T13:49:38.782Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DedeCMS5-7挖掘后台getshell漏洞">
+<meta name="twitter:description" content="第一处（Failed）基本原理是语句写入 inc 文件中，然后包含进来。 漏洞分析首先，我们需要找到一个写文件的地方，我的理解 inc 文件是对include file 的缩写，所以如果能够控制写入的这个文件内容，一般能够找到include它的地方。 注意，下面提到的操作需要先以管理员身份登录后台。 找到一个写入inc文件的地方，可以知道，这里控制了LoadSource的输入即可控制写入的文件内容">
+<meta name="twitter:image" content="http://ultramangaia.github.io/img/dedecms/20.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ultramangaia.github.io/img/dedecms/DedeCMS5-7挖掘后台getshell漏洞.html"/>
+
+
+
+
+
+  <title>DedeCMS5-7挖掘后台getshell漏洞 | UltramanGaia's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UltramanGaia's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">DedeCMS5-7挖掘后台getshell漏洞</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <h3 id="第一处（Failed）"><a href="#第一处（Failed）" class="headerlink" title="第一处（Failed）"></a>第一处（Failed）</h3><p>基本原理是语句写入 inc 文件中，然后包含进来。</p>
+<h4 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h4><p>首先，我们需要找到一个写文件的地方，我的理解 inc 文件是对<code>include file</code> 的缩写，所以如果能够控制写入的这个文件内容，一般能够找到include它的地方。</p>
+<p>注意，下面提到的操作需要先以管理员身份登录后台。</p>
+<p>找到一个写入inc文件的地方，可以知道，这里控制了<code>LoadSource</code>的输入即可控制写入的文件内容并且算得文件名。</p>
+<p>/uploads/include/dedetag.class.php</p>
+<p><img src="20.png" alt=""></p>
+<p>找到调用的地方。</p>
+<p><img src="21.png" alt=""></p>
+<p>可以看到有很多地方调用了。</p>
+<p>比如这个，/uploads/dede/diy_field_add.php</p>
+<p><img src="22.png" alt=""></p>
+<p>从数据表中取<code>diyforms</code>的<code>info</code>列数据直接作为<code>LoadSource</code>的输入。那么，只要我们控制<code>info</code>列的数据即可。</p>
+<p>找一个insert或者update需要控制的info列的地方。</p>
+<p><img src="23.png" alt=""></p>
+<p>/uploads/dede/diy_field_add.php</p>
+<p><img src="24.png" alt=""></p>
+<p>OK，看看如何控制<code>$oksetting</code>。</p>
+<p>容易看出$oksetting到73行是很容易控制的。</p>
+<p>跟进去<code>GetAddFieldList</code>。</p>
+<p>/uploads/dede/inc/inc_admin_channel.php</p>
+<p><img src="25.png" alt=""></p>
+<p>可以看到，这里调用了<code>LoadSource</code>，这正是我们一开始想要调用的，然后，我们就晕了？不对，在这里调用也是可以的，而且比较方便了，我们可以不经过数据库，直接写入文件。Great！</p>
+<p>继续，可以看到并没有修改<code>$oksetting</code> 的值。可以选择写入数据库，然后调用我们一开始查看的调用地方。方便起见，我们直接这里写入文件了。</p>
+<p>看看需要怎样的路径到达这里。</p>
+<p>/uploads/dede/diy_field_add.php</p>
+<p><img src="26.png" alt=""></p>
+<p>需要这SQL语句不报错，由于表名是来自于前面的SQL语句，而默认是没有这个表名的。</p>
+<p>所以，在此之前我们要添加一个表名。</p>
+<p>这个是在添加表单处添加的。</p>
+<p>找找看</p>
+<p><img src="27.png" alt=""></p>
+<p>发现<code>insert</code>的地方。</p>
+<p>/uploads/dede/diy_add.php</p>
+<p><img src="28.png" alt=""></p>
+<p>很容易构造，或者直接进后台找自定义表单的地方也行。</p>
+<p>访问如下链接即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mydedecms.com/dede/diy_add.php?action=add&amp;diyid=1&amp;table=dede_diyform1&amp;listtemplate=hello1&amp;viewtemplate=hello2&amp;posttemplate=hello3</span><br></pre></td></tr></table></figure>
+<p>这时，已经在数据库中添加表单了。</p>
+<p>然后访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mydedecms.com/dede/diy_field_add.php?action=save&amp;diyid=1&amp;fieldstring=&lt;%3fphp+phpinfo()%3bdie()%3b%3f&gt;&amp;itemname=123&amp;fieldname=field1&amp;isnull=1&amp;spage=no&amp;dtype=text&amp;vdefault=dfaultvalue1&amp;maxlength=250&amp;vinnertext=1011</span><br></pre></td></tr></table></figure>
+<p>此时已经写入文件啦</p>
+<p>访问这个查看源代码可以看到</p>
+<blockquote>
+<p> <a href="http://mydedecms.com/data/tplcache/3bbbc6355901b72ef182102cf99114b8.inc" target="_blank" rel="noopener">http://mydedecms.com/data/tplcache/3bbbc6355901b72ef182102cf99114b8.inc</a></p>
+</blockquote>
+<p>OK，接下来找找include的地方</p>
+<p>uploads/include/dedetag.class.php</p>
+<p><img src="29.png" alt=""></p>
+<p>居然<code>include</code> 的不是我们写入的文件。</p>
+<p>那我们看看这个文件是怎么写入的。</p>
+<p><img src="30.png" alt=""></p>
+<p>额，貌似没有可乘之机。</p>
+<p>可惜，应该先确定能include进来才对的。Orz。</p>
+<h4 id="POC-EXP"><a href="#POC-EXP" class="headerlink" title="POC/EXP"></a>POC/EXP</h4><h3 id="第二处（Failed）"><a href="#第二处（Failed）" class="headerlink" title="第二处（Failed）"></a>第二处（Failed）</h3><p>基本原理是语句写入 inc 文件中，然后包含进来。</p>
+<h4 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h4><h4 id="POC-EXP-1"><a href="#POC-EXP-1" class="headerlink" title="POC/EXP"></a>POC/EXP</h4><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-9175" target="_blank" rel="noopener">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-9175</a></p>
+<p><a href="https://xz.aliyun.com/t/2237" target="_blank" rel="noopener">https://xz.aliyun.com/t/2237</a></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="UltramanGaia" />
+            
+              <p class="site-author-name" itemprop="name">UltramanGaia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一处（Failed）"><span class="nav-number">1.</span> <span class="nav-text">第一处（Failed）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞分析"><span class="nav-number">1.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POC-EXP"><span class="nav-number">1.2.</span> <span class="nav-text">POC/EXP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二处（Failed）"><span class="nav-number">2.</span> <span class="nav-text">第二处（Failed）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞分析-1"><span class="nav-number">2.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POC-EXP-1"><span class="nav-number">2.2.</span> <span class="nav-text">POC/EXP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UltramanGaia</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
